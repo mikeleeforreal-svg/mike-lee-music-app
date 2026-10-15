@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#050914"><title><meta name="theme-color" content="#050914"><title></title> APP</title>
+<meta name="theme-color" content="#050914"><title><meta name="theme-color" content="#050914"><title></title> <meta name="theme-color" content="#050914"><title>MIKE LEE MUSIC APP</title>/title>
 <style>
 :root{--bg:#050914;--panel:#101a2c;--line:#243753;--white:#f7f9ff;--muted:#aab8d0;--green:#00e88f;--blue:#477bff;--pink:#ff347b}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#172c54 0,transparent 50%),var(--bg);color:var(--white);font:15px/1.4 system-ui,-apple-system,Arial,sans-serif}
