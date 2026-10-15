@@ -1,73 +1,118 @@
- <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#050914"><title>MIKE LEE MUSIC APP</title>
-<style>
-:root{--bg:#050914;--panel:#101a2c;--line:#243753;--white:#f7f9ff;--muted:#aab8d0;--green:#00e88f;--blue:#477bff;--pink:#ff347b}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#172c54 0,transparent 50%),var(--bg);color:var(--white);font:15px/1.4 system-ui,-apple-system,Arial,sans-serif}
-button,input,select{font:inherit}button{border:0;cursor:pointer;font-weight:750;color:var(--white);background:#1c2b45;padding:12px 15px;border-radius:13px}button:active{transform:scale(.98)}input,select{width:100%;padding:13px;border:1px solid #314563;background:#091222;color:var(--white);border-radius:13px;outline:none}input:focus,select:focus{border-color:var(--green)}
-header{padding:18px 16px 15px;text-align:center;border-bottom:1px solid #182740;background:#060b17} .topline{display:flex;justify-content:space-between;align-items:center;color:#dce6ff;font-size:22px}.brand{font-size:clamp(26px,7vw,38px);font-weight:1000;letter-spacing:-1px;line-height:1.05;background:linear-gradient(90deg,#ffe46c,#ffae00);color:transparent;background-clip:text}.subbrand{font-size:12px;letter-spacing:3px;font-weight:800;margin-top:5px}.tagline{color:var(--green);font-weight:700;font-size:13px;margin-top:7px}
-main{width:min(100%,920px);margin:auto;padding:14px 12px 90px;display:grid;gap:14px}.section{background:linear-gradient(145deg,#111d31,#0b1322);border:1px solid var(--line);border-radius:20px;padding:15px;box-shadow:0 10px 30px #0003}.section h2{font-size:17px;margin:0 0 12px}.muted{color:var(--muted);font-size:12px}.categories{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.cat{min-height:76px;padding:9px 3px;border:1px solid #31506a;background:#0a1626;border-radius:15px;text-align:center;font-size:11px}.cat span{display:block;font-size:24px;margin-bottom:3px}.cat:nth-child(1){border-color:#00d889;color:#00f2a0}.cat:nth-child(2){border-color:#e44d50}.cat:nth-child(3){border-color:#299efb}.cat:nth-child(4){border-color:#c64bff}.cat:nth-child(5){border-color:#ffb32b}.cat:nth-child(6){border-color:#ff4f9a}.cat:nth-child(7){border-color:#1ddde7}.cat:nth-child(8){border-color:#8b9cff}
-.searchrow{display:grid;grid-template-columns:1fr auto;gap:8px}.primary{background:linear-gradient(100deg,#00ed89,#00c97a);color:#032418}.pill{display:inline-block;background:#063d2b;border:1px solid #00d88a;color:#59ffb9;border-radius:100px;padding:5px 10px;font-size:10px;font-weight:900;letter-spacing:.7px}
-.playergrid{display:grid;grid-template-columns:1fr;gap:12px}.nowplaying{display:grid;grid-template-columns:100px 1fr;gap:13px;align-items:center;background:linear-gradient(120deg,#2a1042,#10172b 60%,#082e2a);border:1px solid #34486a;border-radius:18px;padding:13px}.cover{height:100px;border-radius:15px;display:grid;place-items:center;font-size:47px;background:radial-gradient(circle at 25% 25%,#ffb347,#ff397b 48%,#2d24a8);box-shadow:inset 0 0 25px #fff2}.nowtitle{font-size:21px;font-weight:900;margin-top:7px}.artist{color:var(--green);font-weight:800}.controls{display:flex;gap:8px;margin-top:12px}.controls button{flex:1;padding:12px 5px}.bigplay{background:var(--green);color:#002718;border-radius:50%;min-width:52px;min-height:52px;font-size:19px}.outline{background:#0b1729;border:1px solid #304767}
-.media audio,.media video{width:100%;margin-top:10px;border-radius:12px}.media video{max-height:300px;background:#000}.tabrow{display:flex;gap:8px;margin-bottom:12px}.tabrow button{flex:1}.tabrow button.active{background:var(--green);color:#032418}.fieldlabel{display:block;color:var(--muted);font-size:12px;margin:11px 0 6px}.eqtop{display:flex;justify-content:space-between;align-items:center;gap:8px}.toggle{background:#063d2b;color:#52ffc0;border:1px solid #00d88a;padding:8px 11px}.eq{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:4px;margin:13px 0 8px}.band{text-align:center;min-width:0}.db{font-size:10px;color:var(--green);height:15px}.rail{height:110px;display:flex;justify-content:center;align-items:center;overflow:visible}.rail input{width:104px;height:24px;padding:0;border:0;background:transparent;transform:rotate(-90deg);accent-color:var(--green)}.hz{font-size:9px;color:var(--muted)}.presets{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.presets button{padding:10px 3px;font-size:12px}.presets button.chosen{background:var(--green);color:#032418}.featurecards{display:grid;grid-template-columns:1fr 1fr;gap:10px}.feature{padding:15px;border-radius:17px;min-height:145px}.feature.audio{background:linear-gradient(135deg,#1428a9,#4514a8);border:1px solid #4569ff}.feature.video{background:linear-gradient(135deg,#85123d,#360d2e);border:1px solid #ff347b}.feature .emoji{font-size:27px}.feature h3{margin:8px 0 4px;font-size:15px}.feature p{font-size:12px;margin:0 0 12px;color:#e0e6ff}.feature button{width:100%;background:#071327;border:1px solid #ffffff45;padding:9px 4px;font-size:12px}
-.status{margin-top:9px;color:#6dffc3;font-size:12px;min-height:17px}.video-results{display:grid;gap:10px;margin-top:12px}.video-result{display:grid;grid-template-columns:120px 1fr;gap:10px;align-items:center;background:#091222;border:1px solid #263b58;border-radius:13px;padding:8px}.video-result img{width:120px;aspect-ratio:16/9;object-fit:cover;border-radius:8px}.video-result h3{font-size:13px;line-height:1.35;margin:0 0 5px}.video-result p{font-size:11px;color:var(--muted);margin:0 0 7px}.video-result button{padding:8px 10px;font-size:12px}.embedded-video{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:#000;margin-top:10px}.notice{background:#0a1827;border:1px dashed #35506e;border-radius:13px;padding:11px;color:var(--muted);font-size:12px;line-height:1.55}.bottom{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;gap:3px;padding:8px 4px calc(8px + env(safe-area-inset-bottom));background:#070d1bea;backdrop-filter:blur(12px);border-top:1px solid #263753;z-index:5}.bottom button{background:transparent;padding:4px 3px;font-size:10px;color:#aab8d0;flex:1}.bottom button b{display:block;font-size:20px}.bottom button.active{color:var(--green)}.hide{display:none!important}
-@media(min-width:650px){.categories{grid-template-columns:repeat(8,minmax(0,1fr))}.playergrid{grid-template-columns:1.1fr .9fr}.nowplaying{grid-template-columns:120px 1fr}.cover{height:120px}.rail{height:135px}}
-@media(max-width:360px){main{padding:10px 8px 90px}.section{padding:12px}.eq{gap:1px}.rail{height:95px}.rail input{width:90px}.hz{font-size:8px}.db{font-size:9px}.featurecards{grid-template-columns:1fr}.nowplaying{grid-template-columns:80px 1fr}.cover{height:80px}}
-</style></head>
-<body>
-<header><div class="topline"><span>☰</span><span style="font-size:13px;color:#9aabc6">YOUR MUSIC WORLD</span><span>⚙</span></div><div class="brand">MIKE LEE</div><div class="subbrand">MUSIC APP</div><div class="tagline">AUDIO&nbsp; • &nbsp;VIDEO&nbsp; • &nbsp;EQUALIZER</div></header>
-<main>
-<section class="section"><h2>Explore your sound</h2><div class="categories">
-<button class="cat" onclick="quickSearch('Afrobeats')"><span>♫</span>Afrobeats</button><button class="cat" onclick="quickSearch('Nigerian music')"><span>🌍</span>Nigerian</button><button class="cat" onclick="quickSearch('Ghana Highlife')"><span>◉</span>Highlife</button><button class="cat" onclick="quickSearch('Fuji music Nigeria')"><span>🥁</span>Fuji</button><button class="cat" onclick="quickSearch('African Gospel music')"><span>✝</span>Gospel</button><button class="cat" onclick="quickSearch('African old school music')"><span>★</span>Old School</button><button class="cat" onclick="openTab('video')"><span>▣</span>Videos</button><button class="cat" onclick="quickSearch('African music')"><span>🌐</span>Africa</button></div></section>
-<section class="section"><h2>Search country music videos</h2><div class="searchrow"><input id="query" placeholder="e.g. Alan Jackson, Dolly Parton"><button class="primary" onclick="searchMusic()">Search</button></div><label class="fieldlabel" for="ytApiKey">YouTube Data API key (needed for in-app search)</label><input id="ytApiKey" type="password" autocomplete="off" placeholder="Paste your Google API key here"><p class="muted">Your key stays in this page while it is open. For a public app, restrict the key in Google Cloud and use a secure backend.</p><div class="status" id="searchStatus">Search results will appear here. Choose a result to play it in the app.</div><div id="videoResults" class="video-results"></div></section>
-<section class="section"><div class="playergrid">
-<div><span class="pill">NOW PLAYING</span><div class="nowplaying" style="margin-top:10px"><div class="cover">♫</div><div><div class="muted" id="trackType">Ready for your music</div><div class="nowtitle" id="trackTitle">Choose a song</div><div class="artist" id="trackArtist">MIKE LEE MUSIC</div><div class="controls"><button class="bigplay" onclick="playDemo()" aria-label="Play demo">▶</button><button class="outline" onclick="openTab('audio')">♫ Audio</button><button class="outline" onclick="openTab('video')">▣ Video</button></div></div></div><div class="muted" style="margin-top:8px">Playback controls appear below when you load a song.</div></div>
-<div class="section" style="padding:12px;margin:0;background:#081322;border-color:#00a96d"><div class="eqtop"><h2 style="margin:0;color:var(--green)">▥ Equalizer</h2><button class="toggle" id="eqToggle" onclick="toggleEQ()">ON</button></div><div class="eq" id="eq"></div><div class="presets"><button class="chosen" onclick="preset('flat',this)">Normal</button><button onclick="preset('bass',this)">Bass</button><button onclick="preset('treble',this)">Treble</button><button onclick="preset('vocal',this)">Vocal</button><button onclick="preset('afro',this)">Afrobeats</button><button onclick="preset('flat',this)">Reset</button></div><p class="muted">10 upright sound bands</p></div>
-</div></section>
-<section class="section"><div class="tabrow"><button id="audioBtn" class="active" onclick="openTab('audio')">🎧 Audio player</button><button id="videoBtn" onclick="openTab('video')">🎬 Video player</button></div>
-<div id="audioPanel" class="media"><h2>Play audio inside the app</h2><label class="fieldlabel">Choose a song from your phone</label><input id="audioFile" type="file" accept="audio/*"><label class="fieldlabel">Or paste a direct MP3 / audio URL</label><input id="audioUrl" type="url" placeholder="https://website.com/song.mp3"><div class="controls"><button class="primary" onclick="playAudioUrl()">Play audio link</button><button onclick="stopAll()">Stop</button></div><audio id="audioPlayer" controls playsinline preload="none"></audio></div>
-<div id="videoPanel" class="media hide"><h2>Watch video inside the app</h2><div id="youtubeEmbedWrap" class="hide"><iframe id="youtubeEmbed" class="embedded-video" title="Country music video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe><p class="muted">This is the official embedded player. Some videos are not available for embedding.</p></div><label class="fieldlabel">Choose a video from your phone</label><input id="videoFile" type="file" accept="video/*"><label class="fieldlabel">Or paste a direct MP4 / video URL</label><input id="videoUrl" type="url" placeholder="https://website.com/video.mp4"><div class="controls"><button class="primary" onclick="playVideoUrl()">Play video link</button><button onclick="stopAll()">Stop</button></div><video id="videoPlayer" controls playsinline></video><p class="muted">Your video plays in this player. The equalizer above adjusts both audio and video sound.</p></div><div id="mediaStatus" class="status">Choose a file or use the demo button to test playback.</div></section>
-<section class="featurecards"><div class="feature audio"><div class="emoji">🎧</div><h3>Audio Player</h3><p>Play audio files from your phone or a supported online link.</p><button onclick="openTab('audio')">Open Audio →</button></div><div class="feature video"><div class="emoji">🎬</div><h3>Video Player</h3><p>Watch your saved videos or supported online video links.</p><button onclick="openTab('video')">Open Video →</button></div></section>
-<section class="section"><h2>🌍 Find music by country</h2><label class="fieldlabel">Country</label><select id="country"><option>Nigeria</option><option>Ghana</option><option>South Africa</option><option>Tanzania</option><option>Kenya</option><option>Uganda</option><option>Senegal</option><option>Cameroon</option><option>DR Congo</option><option>Zimbabwe</option><option>All African countries</option></select><button class="primary" style="width:100%;margin-top:10px" onclick="searchCountry()">Find country music</button><p class="muted">Search uses YouTube Data API v3. Add your API key above to show video results here and play eligible videos in the embedded player.</p></section>
-<div class="notice"><b>Playback note:</b> Search needs a YouTube Data API key. Eligible videos play through the official embedded player inside this app; some videos may disallow embedding. Direct MP4/WebM links and local video files are also supported. The demo button tests whether online audio is reachable; if your network blocks the demo host, use a local file or another trusted source.</div>
-</main>
-<nav class="bottom"><button class="active" onclick="window.scrollTo({top:0,behavior:'smooth'})"><b>⌂</b>Home</button><button onclick="openTab('audio')"><b>♫</b>Audio</button><button onclick="openTab('video')"><b>▷</b>Video</button><button onclick="document.getElementById('audioFile').click()"><b>＋</b>Add song</button><button onclick="document.getElementById('query').focus()"><b>⌕</b>Search</button></nav>
+ HTML
+
+<section id="audio-section">
+  <h2>🎵 AUDIO URL</h2>
+  <input
+    id="audioUrl"
+    type="url"
+    placeholder="Paste audio URL here"
+  >
+  <button onclick="loadAudio()">PLAY AUDIO</button>
+  <audio id="audioPlayer" controls style="width:100%">
+  </audio>
+</section>
+
+<section id="video-section">
+  <h2>🎬 VIDEO URL</h2>
+  <input
+    id="videoUrl"
+    type="url"
+    placeholder="Paste video URL here"
+  >
+  <button onclick="loadVideo()">LOAD VIDEO</button>
+  <video
+    id="videoPlayer"
+    controls
+    playsinline
+    style="width:100%;background:black"
+  ></video>
+
+  <h2>VIDEO EQUALIZER</h2>
+
+  <label>Bass</label>
+  <input id="bass" type="range" min="-12" max="12" value="0">
+
+  <label>Mid</label>
+  <input id="mid" type="range" min="-12" max="12" value="0">
+
+  <label>Treble</label>
+  <input id="treble" type="range" min="-12" max="12" value="0">
+
+  <label>Video Volume</label>
+  <input id="videoVolume" type="range" min="0" max="100" value="100">
+</section>
+
 <script>
-const audio=document.getElementById('audioPlayer'),video=document.getElementById('videoPlayer');let ac=null,sources=[],filters=[],enabled=true;
-const freqs=[32,64,125,250,500,1000,2000,4000,8000,16000],names=['32','64','125','250','500','1k','2k','4k','8k','16k'];const eq=document.getElementById('eq');
-freqs.forEach((f,i)=>{const d=document.createElement('div');d.className='band';d.innerHTML='<div class="db" id="db'+i+'">0</div><div class="rail"><input aria-label="'+f+' Hz" id="g'+i+'" type="range" min="-12" max="12" value="0" step="1"></div><div class="hz">'+names[i]+'</div>';eq.appendChild(d);document.getElementById('g'+i).addEventListener('input',e=>{document.getElementById('db'+i).textContent=e.target.value; if(filters[i])filters[i].gain.value=enabled?+e.target.value:0;});});
-function msg(t){document.getElementById('mediaStatus').textContent=t}
-function openTab(t){let a=t==='audio';document.getElementById('audioPanel').classList.toggle('hide',!a);document.getElementById('videoPanel').classList.toggle('hide',a);document.getElementById('audioBtn').classList.toggle('active',a);document.getElementById('videoBtn').classList.toggle('active',!a);(a?document.getElementById('audioPanel'):document.getElementById('videoPanel')).scrollIntoView({behavior:'smooth',block:'nearest'});}
-function stopAll(){audio.pause();video.pause();msg('Playback stopped.')}
-function initEQ(){if(ac)return;try{ac=new(window.AudioContext||window.webkitAudioContext)();src=ac.createMediaElementSource(audio);let prev=src;freqs.forEach((f,i)=>{let b=ac.createBiquadFilter();b.type=i===0?'lowshelf':i===9?'highshelf':'peaking';b.frequency.value=f;b.Q.value=1;b.gain.value=enabled?+document.getElementById('g'+i).value:0;prev.connect(b);prev=b;filters.push(b)});prev.connect(ac.destination)}catch(e){msg('The browser could not activate the equalizer; audio controls can still be used.');}}
-function toggleEQ(){enabled=!enabled;document.getElementById('eqToggle').textContent=enabled?'ON':'OFF';filters.forEach((f,i)=>f.gain.value=enabled?+document.getElementById('g'+i).value:0)}
-function preset(p,el){const sets={flat:[0,0,0,0,0,0,0,0,0,0],bass:[7,6,4,2,0,0,0,1,1,1],treble:[-1,-1,0,0,0,1,3,5,6,6],vocal:[-2,-1,0,2,4,4,3,1,0,-1],afro:[5,4,2,0,-1,1,3,3,2,2]};(sets[p]||sets.flat).forEach((v,i)=>{let e=document.getElementById('g'+i);e.value=v;e.dispatchEvent(new Event('input'))});document.querySelectorAll('.presets button').forEach(b=>b.classList.remove('chosen'));if(el)el.classList.add('chosen')}
-function setTrack(title,artist,type){document.getElementById('trackTitle').textContent=title;document.getElementById('trackArtist').textContent=artist;document.getElementById('trackType').textContent=type}
-async function playDemo(){openTab('audio');audio.crossOrigin='anonymous';audio.src='https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';audio.load();initEQ();if(ac&&ac.state==='suspended')await ac.resume();setTrack('Demo music','Online audio test','TEST TRACK');try{await audio.play();msg('Demo music is playing. You can adjust the upright equalizer.')}catch(e){msg('Demo did not start. Your network may block this source; choose an audio file saved on your phone.')} }
-document.getElementById('audioFile').addEventListener('change',async e=>{let f=e.target.files[0];if(!f)return;stopAll();audio.crossOrigin='';audio.src=URL.createObjectURL(f);audio.load();openTab('audio');setTrack(f.name,'From your phone','LOCAL AUDIO');initEQ();try{if(ac&&ac.state==='suspended')await ac.resume();await audio.play();msg('Playing '+f.name)}catch(err){msg('File loaded. Tap Play in the audio controls.')}});
-async function playAudioUrl(){let u=document.getElementById('audioUrl').value.trim();if(!u){msg('Paste a direct audio file URL first.');return}try{new URL(u)}catch(e){msg('Please enter a complete web link starting with https://');return}stopAll();audio.crossOrigin='anonymous';audio.src=u;audio.load();openTab('audio');setTrack('Online audio','Online source','AUDIO');initEQ();try{if(ac&&ac.state==='suspended')await ac.resume();await audio.play();msg('Audio started.')}catch(e){msg('Could not play that link. It must be a direct audio file and the host must allow playback. Try a phone file.')} }
-document.getElementById('videoFile').addEventListener('change',async e=>{let f=e.target.files[0];if(!f)return;stopAll();audio.pause();video.src=URL.createObjectURL(f);video.load();openTab('video');setTrack(f.name,'From your phone','LOCAL VIDEO');initEQ();try{if(ac&&ac.state==='suspended')await ac.resume();await video.play();msg('Video is playing inside the app. Use the equalizer above to change its sound.')}catch(err){msg('Video loaded inside the app. Tap Play on the video controls.')}});
-async function playVideoUrl(){let u=document.getElementById('videoUrl').value.trim();if(!u){msg('Paste a direct video URL first.');return}try{new URL(u)}catch(e){msg('Please enter a complete web link.');return}stopAll();audio.pause();video.src=u;video.load();openTab('video');initEQ();try{if(ac&&ac.state==='suspended')await ac.resume();await video.play();msg('Video is playing inside the app. Adjust the equalizer above to change its sound.')}catch(e){msg('Could not play that link. It must be a direct MP4/WebM file link, not a YouTube watch-page link.')}}
-async function searchMusic(){
- const q=document.getElementById('query').value.trim(),key=document.getElementById('ytApiKey').value.trim(),status=document.getElementById('searchStatus'),results=document.getElementById('videoResults');
- if(!q){status.textContent='Type a song, artist, or country music style first.';return}
- if(!key){status.textContent='To show real search results inside this app, add a YouTube Data API key. Follow the setup steps below.';results.innerHTML='<div class="notice"><b>Set up free search access:</b><ol><li>Open <a style="color:#6dffc3" href="https://console.cloud.google.com/" target="_blank" rel="noopener">Google Cloud Console</a>.</li><li>Create a project and enable <b>YouTube Data API v3</b>.</li><li>Create an API key, then paste it above.</li></ol><p>Google may apply quotas or require billing details. Do not publish an unrestricted key in a public app.</p></div>';return}
- status.textContent='Searching country music videos…';results.innerHTML='';
- try{
-  const url='https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoEmbeddable=true&maxResults=12&q='+encodeURIComponent(q+' country music')+'&key='+encodeURIComponent(key);
-  const res=await fetch(url);const data=await res.json();
-  if(!res.ok)throw new Error(data.error?.message||'Search request failed. Check your API key and Google Cloud settings.');
-  const items=(data.items||[]).filter(x=>x.id&&x.id.videoId&&x.snippet);
-  if(!items.length){status.textContent='No embeddable results found. Try another artist or song.';return}
-  status.textContent='Found '+items.length+' videos. Tap Play to watch inside MIKE LEE MUSIC APP.';
-  for(const item of items){const id=item.id.videoId,sn=item.snippet,card=document.createElement('div');card.className='video-result';const img=document.createElement('img');img.alt='Video thumbnail';img.loading='lazy';img.src=sn.thumbnails?.medium?.url||sn.thumbnails?.default?.url||'';const info=document.createElement('div'),title=document.createElement('h3'),channel=document.createElement('p'),btn=document.createElement('button');title.textContent=sn.title;channel.textContent=sn.channelTitle||'YouTube creator';btn.className='primary';btn.textContent='▶ Play in app';btn.onclick=()=>playYouTubeEmbed(id,sn.title,sn.channelTitle||'YouTube');info.append(title,channel,btn);card.append(img,info);results.append(card)}
- }catch(e){status.textContent='Search failed: '+e.message+' Check internet, API key, and YouTube Data API v3 access.'}
+function loadAudio() {
+  const url = document.getElementById("audioUrl").value.trim();
+  if (!url) {
+    alert("Please enter an audio URL.");
+    return;
+  }
+  document.getElementById("audioPlayer").src = url;
+  document.getElementById("audioPlayer").play();
 }
-function playYouTubeEmbed(id,title,channel){stopAll();video.removeAttribute('src');video.load();document.getElementById('youtubeEmbed').src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+'?playsinline=1&rel=0';document.getElementById('youtubeEmbedWrap').classList.remove('hide');openTab('video');setTrack(title,channel,'COUNTRY MUSIC VIDEO');msg('Video opened in the in-app embedded player. If it is blocked, choose another result; some owners disable embedding.');}
-function quickSearch(q){document.getElementById('query').value=q;searchMusic()}
-function searchCountry(){quickSearch(document.getElementById('country').value+' country music')}
-audio.addEventListener('error',()=>{if(audio.src)msg('Audio could not load. Check your internet or choose a file saved on your phone.')});video.addEventListener('error',()=>{if(video.src)msg('Video could not load. Try another video file or direct MP4 link.')});
-document.getElementById('query').addEventListener('keydown',e=>{if(e.key==='Enter')searchMusic()});
-</script></body></html>
+
+function loadVideo() {
+  const url = document.getElementById("videoUrl").value.trim();
+  if (!url) {
+    alert("Please enter a video URL.");
+    return;
+  }
+  const video = document.getElementById("videoPlayer");
+  video.src = url;
+  video.load();
+  video.play().catch(() => {
+    alert("Video loaded. Press Play to start it.");
+  });
+}
+
+document.getElementById("videoVolume").addEventListener("input", e => {
+  document.getElementById("videoPlayer").volume =
+    Number(e.target.value) / 100;
+});
+
+let audioContext, source, bassFilter, midFilter, trebleFilter;
+
+document.getElementById("videoPlayer").addEventListener("play", function () {
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    source = audioContext.createMediaElementSource(this);
+
+    bassFilter = audioContext.createBiquadFilter();
+    bassFilter.type = "lowshelf";
+    bassFilter.frequency.value = 250;
+
+    midFilter = audioContext.createBiquadFilter();
+    midFilter.type = "peaking";
+    midFilter.frequency.value = 1000;
+
+    trebleFilter = audioContext.createBiquadFilter();
+    trebleFilter.type = "highshelf";
+    trebleFilter.frequency.value = 4000;
+
+    source.connect(bassFilter);
+    bassFilter.connect(midFilter);
+    midFilter.connect(trebleFilter);
+    trebleFilter.connect(audioContext.destination);
+  }
+
+  if (audioContext.state === "suspended") audioContext.resume();
+
+  bassFilter.gain.value = Number(document.getElementById("bass").value);
+  midFilter.gain.value = Number(document.getElementById("mid").value);
+  trebleFilter.gain.value = Number(document.getElementById("treble").value);
+});
+
+["bass", "mid", "treble"].forEach(id => {
+  document.getElementById(id).addEventListener("input", e => {
+    if (!audioContext) return;
+    const filters = {
+      bass: bassFilter,
+      mid: midFilter,
+      treble: trebleFilter
+    };
+    if (filters[id]) filters[id].gain.value = Number(e.target.value);
+  });
+});
+</script>
