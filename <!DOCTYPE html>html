@@ -1,118 +1,220 @@
- HTML
+  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIKE LEE MUSIC APP</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 18px;
+      background: #101018;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    h1 { color: #20e879; text-align: center; }
+    h2 { color: #20e879; }
+    input, button {
+      box-sizing: border-box;
+      padding: 12px;
+      margin: 5px 0;
+      border-radius: 8px;
+      border: 1px solid #555;
+    }
+    input { width: 100%; background: #242432; color: white; }
+    button {
+      background: #20e879;
+      color: #101018;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    video { width: 100%; background: black; border-radius: 10px; }
+    .panel {
+      background: #20202c;
+      padding: 15px;
+      margin-top: 16px;
+      border-radius: 12px;
+    }
+    .control { margin: 16px 0; }
+    .control label { display: block; margin-bottom: 8px; }
+    input[type="range"] { padding: 0; accent-color: #20e879; }
+    #status { color: #20e879; }
+  </style>
+</head>
+<body>
 
-<section id="audio-section">
-  <h2>🎵 AUDIO URL</h2>
-  <input
-    id="audioUrl"
-    type="url"
-    placeholder="Paste audio URL here"
-  >
-  <button onclick="loadAudio()">PLAY AUDIO</button>
-  <audio id="audioPlayer" controls style="width:100%">
-  </audio>
-</section>
+  <h1>MIKE LEE MUSIC APP</h1>
+  <p style="text-align:center">African Music • Audio • Music Videos</p>
 
-<section id="video-section">
-  <h2>🎬 VIDEO URL</h2>
-  <input
-    id="videoUrl"
-    type="url"
-    placeholder="Paste video URL here"
-  >
-  <button onclick="loadVideo()">LOAD VIDEO</button>
-  <video
-    id="videoPlayer"
-    controls
-    playsinline
-    style="width:100%;background:black"
-  ></video>
+  <section class="panel">
+    <h2>Music Video Player</h2>
+    <input id="videoUrl" type="url"
+      placeholder="Paste a direct video URL here">
+    <button onclick="loadVideo()">LOAD VIDEO</button>
 
-  <h2>VIDEO EQUALIZER</h2>
+    <video id="musicVideo" controls playsinline crossorigin="anonymous">
+    </video>
 
-  <label>Bass</label>
-  <input id="bass" type="range" min="-12" max="12" value="0">
+    <p id="status">Ready to load a video.</p>
+  </section>
 
-  <label>Mid</label>
-  <input id="mid" type="range" min="-12" max="12" value="0">
+  <section class="panel">
+    <h2>VIDEO EQUALIZER</h2>
+    <p>Adjust the sound of your music video.</p>
 
-  <label>Treble</label>
-  <input id="treble" type="range" min="-12" max="12" value="0">
+    <div class="control">
+      <label for="bass">Bass: <span id="bassValue">0</span> dB</label>
+      <input id="bass" type="range"
+        min="-12" max="12" value="0" step="1">
+    </div>
 
-  <label>Video Volume</label>
-  <input id="videoVolume" type="range" min="0" max="100" value="100">
-</section>
+    <div class="control">
+      <label for="mid">Mid: <span id="midValue">0</span> dB</label>
+      <input id="mid" type="range"
+        min="-12" max="12" value="0" step="1">
+    </div>
 
-<script>
-function loadAudio() {
-  const url = document.getElementById("audioUrl").value.trim();
-  if (!url) {
-    alert("Please enter an audio URL.");
-    return;
-  }
-  document.getElementById("audioPlayer").src = url;
-  document.getElementById("audioPlayer").play();
-}
+    <div class="control">
+      <label for="treble">Treble: <span id="trebleValue">0</span> dB</label>
+      <input id="treble" type="range"
+        min="-12" max="12" value="0" step="1">
+    </div>
 
-function loadVideo() {
-  const url = document.getElementById("videoUrl").value.trim();
-  if (!url) {
-    alert("Please enter a video URL.");
-    return;
-  }
-  const video = document.getElementById("videoPlayer");
-  video.src = url;
-  video.load();
-  video.play().catch(() => {
-    alert("Video loaded. Press Play to start it.");
-  });
-}
+    <div class="control">
+      <label for="videoVolume">
+        Video Volume: <span id="volumeValue">100</span>%
+      </label>
+      <input id="videoVolume" type="range"
+        min="0" max="100" value="100">
+    </div>
 
-document.getElementById("videoVolume").addEventListener("input", e => {
-  document.getElementById("videoPlayer").volume =
-    Number(e.target.value) / 100;
-});
+    <button onclick="resetEqualizer()">RESET EQUALIZER</button>
+  </section>
 
-let audioContext, source, bassFilter, midFilter, trebleFilter;
+  <script>
+    const video = document.getElementById("musicVideo");
+    const statusText = document.getElementById("status");
 
-document.getElementById("videoPlayer").addEventListener("play", function () {
-  if (!audioContext) {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    source = audioContext.createMediaElementSource(this);
+    let audioContext;
+    let bassFilter;
+    let midFilter;
+    let trebleFilter;
+    let source;
+    let equalizerReady = false;
 
-    bassFilter = audioContext.createBiquadFilter();
-    bassFilter.type = "lowshelf";
-    bassFilter.frequency.value = 250;
+    function loadVideo() {
+      const url = document.getElementById("videoUrl").value.trim();
 
-    midFilter = audioContext.createBiquadFilter();
-    midFilter.type = "peaking";
-    midFilter.frequency.value = 1000;
+      if (!url) {
+        statusText.textContent = "Please enter a video URL.";
+        return;
+      }
 
-    trebleFilter = audioContext.createBiquadFilter();
-    trebleFilter.type = "highshelf";
-    trebleFilter.frequency.value = 4000;
+      try {
+        const parsed = new URL(url);
+        if (parsed.protocol !== "https:" &&
+            parsed.protocol !== "http:") {
+          throw new Error("Invalid protocol");
+        }
+      } catch {
+        statusText.textContent = "Please enter a valid video URL.";
+        return;
+      }
 
-    source.connect(bassFilter);
-    bassFilter.connect(midFilter);
-    midFilter.connect(trebleFilter);
-    trebleFilter.connect(audioContext.destination);
-  }
+      video.src = url;
+      video.load();
+      statusText.textContent =
+        "Video loaded if the source is compatible. Press Play.";
+    }
 
-  if (audioContext.state === "suspended") audioContext.resume();
+    function setupEqualizer() {
+      if (equalizerReady) {
+        if (audioContext.state === "suspended") {
+          audioContext.resume();
+        }
+        return;
+      }
 
-  bassFilter.gain.value = Number(document.getElementById("bass").value);
-  midFilter.gain.value = Number(document.getElementById("mid").value);
-  trebleFilter.gain.value = Number(document.getElementById("treble").value);
-});
+      audioContext = new (window.AudioContext ||
+        window.webkitAudioContext)();
 
-["bass", "mid", "treble"].forEach(id => {
-  document.getElementById(id).addEventListener("input", e => {
-    if (!audioContext) return;
-    const filters = {
-      bass: bassFilter,
-      mid: midFilter,
-      treble: trebleFilter
-    };
-    if (filters[id]) filters[id].gain.value = Number(e.target.value);
-  });
-});
-</script>
+      source = audioContext.createMediaElementSource(video);
+
+      bassFilter = audioContext.createBiquadFilter();
+      bassFilter.type = "lowshelf";
+      bassFilter.frequency.value = 250;
+
+      midFilter = audioContext.createBiquadFilter();
+      midFilter.type = "peaking";
+      midFilter.frequency.value = 1000;
+      midFilter.Q.value = 1;
+
+      trebleFilter = audioContext.createBiquadFilter();
+      trebleFilter.type = "highshelf";
+      trebleFilter.frequency.value = 4000;
+
+      source.connect(bassFilter);
+      bassFilter.connect(midFilter);
+      midFilter.connect(trebleFilter);
+      trebleFilter.connect(audioContext.destination);
+
+      equalizerReady = true;
+      updateEqualizer();
+    }
+
+    video.addEventListener("play", () => {
+      try {
+        setupEqualizer();
+        if (audioContext.state === "suspended") {
+          audioContext.resume();
+        }
+      } catch (error) {
+        statusText.textContent =
+          "Equalizer unavailable for this video source.";
+      }
+    });
+
+    function updateEqualizer() {
+      const bass = Number(document.getElementById("bass").value);
+      const mid = Number(document.getElementById("mid").value);
+      const treble = Number(document.getElementById("treble").value);
+
+      document.getElementById("bassValue").textContent = bass;
+      document.getElementById("midValue").textContent = mid;
+      document.getElementById("trebleValue").textContent = treble;
+
+      if (equalizerReady) {
+        bassFilter.gain.value = bass;
+        midFilter.gain.value = mid;
+        trebleFilter.gain.value = treble;
+      }
+    }
+
+    ["bass", "mid", "treble"].forEach(id => {
+      document.getElementById(id).addEventListener(
+        "input", updateEqualizer
+      );
+    });
+
+    document.getElementById("videoVolume").addEventListener(
+      "input", event => {
+        const volume = Number(event.target.value);
+        video.volume = volume / 100;
+        document.getElementById("volumeValue").textContent = volume;
+      }
+    );
+
+    function resetEqualizer() {
+      ["bass", "mid", "treble"].forEach(id => {
+        document.getElementById(id).value = 0;
+      });
+      document.getElementById("videoVolume").value = 100;
+      video.volume = 1;
+      document.getElementById("volumeValue").textContent = 100;
+      updateEqualizer();
+    }
+  </script>
+
+</body>
+</html>
