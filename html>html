@@ -1,221 +1,213 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MIKE LEE MUSIC APP</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 18px;
-      background: #101018;
-      color: white;
-      font-family: Arial, sans-serif;
-    }
-    h1 { color: #20e879; text-align: center; }
-    h2 { color: #20e879; }
-    input, button {
-      box-sizing: border-box;
-      padding: 12px;
-      margin: 5px 0;
-      border-radius: 8px;
-      border: 1px solid #555;
-    }
-    input { width: 100%; background: #242432; color: white; }
-    button {
-      background: #20e879;
-      color: #101018;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    video { width: 100%; background: black; border-radius: 10px; }
-    .panel {
-      background: #20202c;
-      padding: 15px;
-      margin-top: 16px;
-      border-radius: 12px;
-    }
-    .control { margin: 16px 0; }
-    .control label { display: block; margin-bottom: 8px; }
-    input[type="range"] { padding: 0; accent-color: #20e879; }
-    #status { color: #20e879; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090b18">
+<title>MIKE LEE MUSIC APP — Studio Edition</title>
+<style>
+:root{--bg:#090b18;--panel:#14182b;--panel2:#1b2038;--gold:#ffd166;--cyan:#43e7ff;--pink:#ff5da2;--muted:#a8b0ce;--line:#303858}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#20234a 0,#090b18 55%);color:#f7f8ff;font-family:system-ui,-apple-system,Arial,sans-serif}
+header{padding:28px 18px 20px;text-align:center;background:linear-gradient(135deg,#1d2250aa,#101426aa);border-bottom:1px solid var(--line)}
+.logo{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,var(--gold),#ff8b4d);color:#151526;font-size:30px;font-weight:900;box-shadow:0 8px 30px #ffd16633}
+h1{font-size:clamp(25px,6vw,38px);margin:13px 0 5px;letter-spacing:.04em}
+header p{margin:0;color:var(--muted)}
+.pill{display:inline-block;border:1px solid #4d547d;border-radius:99px;padding:6px 11px;font-size:12px;color:var(--cyan);margin-top:13px}
+main{max-width:1000px;margin:auto;padding:16px}
+.panel{background:linear-gradient(145deg,#1b2038f2,#101426f7);border:1px solid var(--line);border-radius:20px;padding:18px;margin:14px 0;box-shadow:0 14px 35px #0003}
+.panel h2{font-size:19px;margin:0 0 14px}
+.small{font-size:13px;color:var(--muted);line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}
+input,select,button{font:inherit;border-radius:12px}
+input[type=text],input[type=url],input[type=search],select{width:100%;padding:13px;background:#0b0e1d;color:white;border:1px solid #343d61;outline:none}
+input:focus,select:focus{border-color:var(--cyan)}
+button{border:0;padding:12px 15px;background:linear-gradient(135deg,var(--gold),#ffab58);color:#171728;font-weight:800;cursor:pointer}
+button.secondary{background:#262d4b;color:#f4f6ff;border:1px solid #424d76}
+button.full{width:100%;margin-top:9px}
+.row{display:flex;gap:9px;align-items:center}
+.row>*{min-width:0}
+.row input{flex:1}
+audio,video{display:block;width:100%;margin-top:12px;border-radius:12px}
+.playerbox{padding:14px;background:#090c19;border:1px solid #303858;border-radius:16px;margin-top:12px}
+.tag{font-size:11px;color:var(--cyan);letter-spacing:.14em;text-transform:uppercase}
+.eqgrid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:8px;align-items:end;margin-top:18px}
+.band{min-width:0;text-align:center;background:#0b0e1d;border:1px solid #303858;border-radius:12px;padding:10px 3px}
+.band input{writing-mode:vertical-lr;direction:rtl;appearance:slider-vertical;width:24px;height:128px;max-width:100%;margin:8px auto;accent-color:var(--cyan)}
+.band label{display:block;font-size:11px;color:var(--muted)}
+.band output{display:block;color:var(--gold);font-size:11px;font-weight:700}
+.eqpresets{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.eqpresets button{flex:1;min-width:95px}
+.master{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:14px}
+.control{background:#0b0e1d;border:1px solid #303858;padding:12px;border-radius:12px}
+.control label{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:8px}
+input[type=range]{width:100%;accent-color:var(--pink)}
+.meter{height:150px;display:flex;align-items:end;justify-content:center;gap:5px;padding:14px;background:#090c19;border-radius:14px;border:1px solid #303858}
+.meter span{display:block;width:8%;height:12%;border-radius:5px 5px 2px 2px;background:linear-gradient(0deg,#43e7ff,#a8ff8b,#ffd166,#ff5da2);transition:height .15s}
+.note{padding:12px;border-radius:12px;background:#202641;color:#d6defe;font-size:13px;line-height:1.5}
+footer{text-align:center;color:var(--muted);padding:24px 12px}
+@media(max-width:560px){main{padding:10px}.panel{padding:14px}.eqgrid{grid-template-columns:repeat(5,minmax(0,1fr))}.band input{height:105px}.row{flex-direction:column;align-items:stretch}.row button{width:100%}}
+</style>
 </head>
 <body>
-
+<header>
+  <div class="logo">ML</div>
   <h1>MIKE LEE MUSIC APP</h1>
-  <p style="text-align:center">African Music • Audio • Music Videos</p>
-
+  <p>Your music. Your countries. Your sound.</p>
+  <span class="pill">STUDIO EDITION · MOBILE READY</span>
+</header>
+<main>
   <section class="panel">
-    <h2>Music Video Player</h2>
-    <input id="videoUrl" type="url"
-      placeholder="Paste a direct video URL here">
-    <button onclick="loadVideo()">LOAD VIDEO</button>
-
-    <video id="musicVideo" controls playsinline crossorigin="anonymous">
-    </video>
-
-    <p id="status">Ready to load a video.</p>
+    <h2>🌍 Discover music</h2>
+    <div class="grid">
+      <div><label for="search">Song, artist, album or genre</label><input id="search" type="search" placeholder="e.g. Afrobeats, Highlife, Wizkid"></div>
+      <div><label for="country">Browse by country</label><select id="country"><option value="">All countries</option><option>Nigeria</option><option>Ghana</option><option>South Africa</option><option>Kenya</option><option>Uganda</option><option>Tanzania</option><option>Senegal</option><option>Egypt</option><option>Morocco</option><option>India</option><option>United States</option><option>United Kingdom</option><option>Jamaica</option><option>Brazil</option><option>Japan</option></select></div>
+    </div>
+    <p id="searchStatus" class="small">Search interface ready. Connect a licensed music catalogue/API to return real tracks.</p>
+    <div class="note">Searching is only a front-end interface at this stage. A Google/YouTube API key can return video metadata, but it does not grant rights to stream or download every song.</div>
   </section>
 
   <section class="panel">
-    <h2>VIDEO EQUALIZER</h2>
-    <p>Adjust the sound of your music video.</p>
-
-    <div class="control">
-      <label for="bass">Bass: <span id="bassValue">0</span> dB</label>
-      <input id="bass" type="range"
-        min="-12" max="12" value="0" step="1">
-    </div>
-
-    <div class="control">
-      <label for="mid">Mid: <span id="midValue">0</span> dB</label>
-      <input id="mid" type="range"
-        min="-12" max="12" value="0" step="1">
-    </div>
-
-    <div class="control">
-      <label for="treble">Treble: <span id="trebleValue">0</span> dB</label>
-      <input id="treble" type="range"
-        min="-12" max="12" value="0" step="1">
-    </div>
-
-    <div class="control">
-      <label for="videoVolume">
-        Video Volume: <span id="volumeValue">100</span>%
-      </label>
-      <input id="videoVolume" type="range"
-        min="0" max="100" value="100">
-    </div>
-
-    <button onclick="resetEqualizer()">RESET EQUALIZER</button>
+    <h2>🎧 Audio deck</h2>
+    <label for="audioUrl">Authorized direct audio URL (MP3, OGG, or compatible stream)</label>
+    <div class="row"><input id="audioUrl" type="url" placeholder="https://example.com/track.mp3"><button id="loadAudio">LOAD TRACK</button></div>
+    <div class="playerbox"><span class="tag">Audio playback</span><audio id="audio" controls preload="metadata"></audio><p id="audioStatus" class="small">Paste a direct audio file URL you have permission to play.</p></div>
   </section>
 
-  <script>
-    const video = document.getElementById("musicVideo");
-    const statusText = document.getElementById("status");
+  <section class="panel">
+    <h2>🎬 Video deck</h2>
+    <label for="videoUrl">Authorized direct video URL (MP4 or compatible stream)</label>
+    <div class="row"><input id="videoUrl" type="url" placeholder="https://example.com/video.mp4"><button id="loadVideo">LOAD VIDEO</button></div>
+    <div class="playerbox"><span class="tag">In-page video</span><video id="video" controls playsinline preload="metadata"></video><p class="small">A normal YouTube watch-page URL is not a direct video-file URL. Use an authorized embeddable provider or direct stream.</p></div>
+  </section>
 
-    let audioContext;
-    let bassFilter;
-    let midFilter;
-    let trebleFilter;
-    let source;
-    let equalizerReady = false;
+  <section class="panel">
+    <h2>🎚️ 10-band graphic equalizer</h2>
+    <p class="small">Adjust frequency bands while compatible audio is playing. Equalization uses the Web Audio API and may require you to press Play first.</p>
+    <div class="eqpresets">
+      <button class="secondary" data-preset="flat">Flat</button><button class="secondary" data-preset="bass">Bass Boost</button><button class="secondary" data-preset="vocal">Vocal</button><button class="secondary" data-preset="dance">Dance</button><button class="secondary" data-preset="reset">Reset</button>
+    </div>
+    <div id="eq" class="eqgrid"></div>
+    <div class="master">
+      <div class="control"><label for="masterVolume">Master volume <output id="masterOut">80%</output></label><input id="masterVolume" type="range" min="0" max="100" value="80"></div>
+      <div class="control"><label for="balance">Stereo balance <output id="balanceOut">Center</output></label><input id="balance" type="range" min="-1" max="1" step=".1" value="0"></div>
+      <div class="control"><label for="preamp">Preamp <output id="preampOut">0 dB</output></label><input id="preamp" type="range" min="-12" max="12" value="0"></div>
+    </div>
+    <h2 style="margin-top:20px">Live level display</h2>
+    <div id="meter" class="meter" aria-label="Decorative audio level display"></div>
+    <p class="note">Equalizer applies to the audio deck in this file when the browser permits audio processing. It cannot make a phone louder than its hardware limit. Video equalization varies by browser and source; this graphic EQ is for the audio deck.</p>
+  </section>
 
-    function loadVideo() {
-      const url = document.getElementById("videoUrl").value.trim();
-
-      if (!url) {
-        statusText.textContent = "Please enter a video URL.";
-        return;
-      }
-
-      try {
-        const parsed = new URL(url);
-        if (parsed.protocol !== "https:" &&
-            parsed.protocol !== "http:") {
-          throw new Error("Invalid protocol");
-        }
-      } catch {
-        statusText.textContent = "Please enter a valid video URL.";
-        return;
-      }
-
-      video.src = url;
-      video.load();
-      statusText.textContent =
-        "Video loaded if the source is compatible. Press Play.";
-    }
-
-    function setupEqualizer() {
-      if (equalizerReady) {
-        if (audioContext.state === "suspended") {
-          audioContext.resume();
-        }
-        return;
-      }
-
-      audioContext = new (window.AudioContext ||
-        window.webkitAudioContext)();
-
-      source = audioContext.createMediaElementSource(video);
-
-      bassFilter = audioContext.createBiquadFilter();
-      bassFilter.type = "lowshelf";
-      bassFilter.frequency.value = 250;
-
-      midFilter = audioContext.createBiquadFilter();
-      midFilter.type = "peaking";
-      midFilter.frequency.value = 1000;
-      midFilter.Q.value = 1;
-
-      trebleFilter = audioContext.createBiquadFilter();
-      trebleFilter.type = "highshelf";
-      trebleFilter.frequency.value = 4000;
-
-      source.connect(bassFilter);
-      bassFilter.connect(midFilter);
-      midFilter.connect(trebleFilter);
-      trebleFilter.connect(audioContext.destination);
-
-      equalizerReady = true;
-      updateEqualizer();
-    }
-
-    video.addEventListener("play", () => {
-      try {
-        setupEqualizer();
-        if (audioContext.state === "suspended") {
-          audioContext.resume();
-        }
-      } catch (error) {
-        statusText.textContent =
-          "Equalizer unavailable for this video source.";
-      }
-    });
-
-    function updateEqualizer() {
-      const bass = Number(document.getElementById("bass").value);
-      const mid = Number(document.getElementById("mid").value);
-      const treble = Number(document.getElementById("treble").value);
-
-      document.getElementById("bassValue").textContent = bass;
-      document.getElementById("midValue").textContent = mid;
-      document.getElementById("trebleValue").textContent = treble;
-
-      if (equalizerReady) {
-        bassFilter.gain.value = bass;
-        midFilter.gain.value = mid;
-        trebleFilter.gain.value = treble;
-      }
-    }
-
-    ["bass", "mid", "treble"].forEach(id => {
-      document.getElementById(id).addEventListener(
-        "input", updateEqualizer
-      );
-    });
-
-    document.getElementById("videoVolume").addEventListener(
-      "input", event => {
-        const volume = Number(event.target.value);
-        video.volume = volume / 100;
-        document.getElementById("volumeValue").textContent = volume;
-      }
-    );
-
-    function resetEqualizer() {
-      ["bass", "mid", "treble"].forEach(id => {
-        document.getElementById(id).value = 0;
-      });
-      document.getElementById("videoVolume").value = 100;
-      video.volume = 1;
-      document.getElementById("volumeValue").textContent = 100;
-      updateEqualizer();
-    }
-  </script>
-
+  <section class="panel">
+    <h2>🔊 Quick sound control</h2>
+    <div class="control"><label for="quickVolume">Player volume <output id="quickOut">80%</output></label><input id="quickVolume" type="range" min="0" max="100" value="80"></div>
+    <button id="mute" class="secondary full">MUTE / UNMUTE</button>
+  </section>
+  <footer>MIKE LEE MUSIC APP · Studio Edition<br><span class="small">Use only music and video streams you are authorized to play.</span></footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const audio=$('audio'), video=$('video');
+const freqs=[31,62,125,250,500,1000,2000,4000,8000,16000];
+const labels=['31','62','125','250','500','1k','2k','4k','8k','16k'];
+const filters=[];
+let audioCtx=null, source=null, preamp=null, panner=null, analyser=null, initialized=false;
+let muted=false;
+const meter=$('meter');
+for(let i=0;i<24;i++){const s=document.createElement('span');meter.appendChild(s)}
+const eq=$('eq');
+freqs.forEach((freq,i)=>{
+  const wrap=document.createElement('div');wrap.className='band';
+  const label=document.createElement('label');label.textContent=labels[i]+' Hz';
+  const input=document.createElement('input');input.type='range';input.min=-12;input.max=12;input.step=1;input.value=0;input.setAttribute('aria-label',labels[i]+' Hz equalizer');
+  const out=document.createElement('output');out.textContent='0 dB';
+  input.addEventListener('input',()=>{out.textContent=(input.value>0?'+':'')+input.value+' dB';if(filters[i])filters[i].gain.value=Number(input.value)});
+  wrap.append(label,input,out);eq.appendChild(wrap);filters.push(null);
+});
+function initAudioGraph(){
+  if(initialized)return;
+  const Ctx=window.AudioContext||window.webkitAudioContext;
+  if(!Ctx)throw new Error('This browser does not support Web Audio equalization.');
+  audioCtx=new Ctx();
+  source=audioCtx.createMediaElementSource(audio);
+  preamp=audioCtx.createGain();
+  panner=audioCtx.createStereoPanner?audioCtx.createStereoPanner():null;
+  analyser=audioCtx.createAnalyser();analyser.fftSize=64;
+  const nodes=[];
+  freqs.forEach((f,i)=>{
+    const filter=audioCtx.createBiquadFilter();
+    filter.type=(i===0?'lowshelf':i===freqs.length-1?'highshelf':'peaking');
+    filter.frequency.value=f;
+    filter.Q.value=1;
+    filter.gain.value=0;
+    filters[i]=filter;
+    nodes.push(filter);
+  });
+  source.connect(preamp);
+  let prev=preamp;
+  nodes.forEach(n=>{prev.connect(n);prev=n});
+  if(panner){prev.connect(panner);prev=panner}
+  prev.connect(analyser);analyser.connect(audioCtx.destination);
+  initialized=true;
+  applyMaster();
+}
+function applyMaster(){
+  const val=Number($('masterVolume').value)/100;
+  const pre=Number($('preamp').value);
+  if(preamp)preamp.gain.value=Math.pow(10,pre/20);
+  audio.volume=val;
+  video.volume=val;
+  if(panner)panner.pan.value=Number($('balance').value);
+  $('masterOut').textContent=Math.round(val*100)+'%';
+  $('quickVolume').value=Math.round(val*100);
+  $('quickOut').textContent=Math.round(val*100)+'%';
+  $('balanceOut').textContent=Number($('balance').value)===0?'Center':(Number($('balance').value)<0?'Left ':'Right ')+Math.abs(Number($('balance').value)*100)+'%';
+  $('preampOut').textContent=(pre>=0?'+':'')+pre+' dB';
+}
+function setPreset(name){
+  const sets={flat:[0,0,0,0,0,0,0,0,0,0],bass:[6,5,4,2,0,0,0,1,2,2],vocal:[-2,-1,0,2,4,4,3,1,0,-1],dance:[5,4,2,0,-2,-1,2,3,4,4],reset:[0,0,0,0,0,0,0,0,0,0]};
+  const vals=sets[name]||sets.flat;
+  [...eq.querySelectorAll('input')].forEach((input,i)=>{input.value=vals[i];input.dispatchEvent(new Event('input'))});
+}
+document.querySelectorAll('[data-preset]').forEach(b=>b.addEventListener('click',()=>setPreset(b.dataset.preset)));
+$('masterVolume').addEventListener('input',applyMaster);
+$('balance').addEventListener('input',applyMaster);
+$('preamp').addEventListener('input',applyMaster);
+$('quickVolume').addEventListener('input',()=>{$('masterVolume').value=$('quickVolume').value;applyMaster()});
+$('mute').addEventListener('click',()=>{
+  muted=!muted;
+  audio.muted=muted;video.muted=muted;
+  $('mute').textContent=muted?'UNMUTE':'MUTE';
+});
+$('loadAudio').addEventListener('click',()=>{
+  const raw=$('audioUrl').value.trim();
+  try{
+    const u=new URL(raw);
+    if(!['https:','http:'].includes(u.protocol))throw new Error();
+    audio.src=u.href;audio.load();$('audioStatus').textContent='Audio URL loaded. Press Play to start playback and enable the equalizer.';
+  }catch{$('audioStatus').textContent='Please enter a valid HTTP or HTTPS direct audio URL.'}
+});
+$('loadVideo').addEventListener('click',()=>{
+  const raw=$('videoUrl').value.trim();
+  try{
+    const u=new URL(raw);
+    if(!['https:','http:'].includes(u.protocol))throw new Error();
+    video.src=u.href;video.load();
+  }catch{alert('Please enter a valid HTTP or HTTPS direct video URL.')}
+});
+audio.addEventListener('play',async()=>{
+  try{initAudioGraph();if(audioCtx.state==='suspended')await audioCtx.resume()}
+  catch(e){$('audioStatus').textContent=e.message||'Audio equalizer could not start in this browser.'}
+});
+audio.addEventListener('error',()=>{$('audioStatus').textContent='Audio could not load. Check the link, file format, permissions and network.'});
+video.addEventListener('error',()=>{if(video.currentSrc)$('video').insertAdjacentHTML('afterend','<p class="small">Video failed to load. Check the direct URL, format and host permissions.</p>')});
+function animateMeter(){
+  requestAnimationFrame(animateMeter);
+  if(!analyser)return;
+  const data=new Uint8Array(analyser.frequencyBinCount);analyser.getByteFrequencyData(data);
+  [...meter.children].forEach((bar,i)=>{const n=data[i%data.length]||0;bar.style.height=(8+n/255*88)+'%'});
+}
+animateMeter();applyMaster();
+</script>
 </body>
 </html>
-
