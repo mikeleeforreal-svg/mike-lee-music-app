@@ -1,1 +1,55 @@
  
+
+<section id="premium">
+  <div class="sectionhead">
+    <h2>Premium Membership</h2>
+    <p>Choose your payment method</p>
+  </div>
+
+  <div class="panel">
+    <div class="eyebrow">MIKE LEE PREMIUM</div>
+    <h2>All Africa. One Sound.</h2>
+    <div class="price">₦5,000
+      <span style="font-size:14px;color:white">/ month</span>
+    </div>
+
+    <div class="paychoices">
+      <button class="paychoice active" id="payBank"
+        onclick="selectPayment('bank')">🏦 First Bank</button>
+      <button class="paychoice" id="payOpay"
+        onclick="selectPayment('opay')">🟢 OPay</button>
+    </div>
+
+    <div class="panel">
+      <h3 id="payTitle">First Bank transfer</h3>
+      <p id="payInfo">Verify the recipient details before transferring.</p>
+      <p>
+        <b>Bank:</b> <span id="accountBank">First Bank</span><br>
+        <b>Account name:</b>
+        <span id="accountName">Ekunke Michael Atah</span><br>
+        <b>Account number:</b>
+        <span id="accountNumber">3038192345</span>
+      </p>
+      <p class="status" id="accountWarning">
+        Account details have not been independently verified.
+        Confirm them with your bank before accepting payments.
+      </p>
+    </div>
+
+    <label for="payerName">Name used for transfer</label>
+    <input class="field" id="payerName" placeholder="Your name">
+
+    <label for="paymentRef">Payment reference</label>
+    <input class="field" id="paymentRef"
+      placeholder="Bank transfer reference">
+
+    <button class="btn" onclick="submitPaymentDetails()">
+      Submit payment reference
+    </button>
+
+    <p id="paymentStatus" class="status" aria-live="polite">
+      Payment verification is not connected. Payment is unverified
+      and Premium remains inactive.
+    </p>
+  </div>
+</section>
