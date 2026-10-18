@@ -1,55 +1,62 @@
- 
+ JavaScript
 
-<section id="premium">
-  <div class="sectionhead">
-    <h2>Premium Membership</h2>
-    <p>Choose your payment method</p>
-  </div>
+/*
+ * Receiving account display only.
+ * These settings do not verify bank ownership or payments.
+ */
+const PAYMENT_ACCOUNTS = {
+  bank: {
+    bank: "First Bank",
+    name: "Ekunke Michael Atah",
+    number: "3038192345",
+    configured: true
+  },
+  opay: {
+    bank: "OPay",
+    name: "",
+    number: "",
+    configured: false
+  }
+};
 
-  <div class="panel">
-    <div class="eyebrow">MIKE LEE PREMIUM</div>
-    <h2>All Africa. One Sound.</h2>
-    <div class="price">₦5,000
-      <span style="font-size:14px;color:white">/ month</span>
-    </div>
+function selectPayment(method) {
+  const account = PAYMENT_ACCOUNTS[method];
 
-    <div class="paychoices">
-      <button class="paychoice active" id="payBank"
-        onclick="selectPayment('bank')">🏦 First Bank</button>
-      <button class="paychoice" id="payOpay"
-        onclick="selectPayment('opay')">🟢 OPay</button>
-    </div>
+  if (!account) return;
 
-    <div class="panel">
-      <h3 id="payTitle">First Bank transfer</h3>
-      <p id="payInfo">Verify the recipient details before transferring.</p>
-      <p>
-        <b>Bank:</b> <span id="accountBank">First Bank</span><br>
-        <b>Account name:</b>
-        <span id="accountName">Ekunke Michael Atah</span><br>
-        <b>Account number:</b>
-        <span id="accountNumber">3038192345</span>
-      </p>
-      <p class="status" id="accountWarning">
-        Account details have not been independently verified.
-        Confirm them with your bank before accepting payments.
-      </p>
-    </div>
+  $("payBank").classList.toggle("active", method === "bank");
+  $("payOpay").classList.toggle("active", method === "opay");
 
-    <label for="payerName">Name used for transfer</label>
-    <input class="field" id="payerName" placeholder="Your name">
+  $("payTitle").textContent = account.bank + " transfer";
+  $("accountBank").textContent = account.bank;
+  $("accountName").textContent =
+    account.configured ? account.name : "Not configured";
+  $("accountNumber").textContent =
+    account.configured ? account.number : "Not configured";
 
-    <label for="paymentRef">Payment reference</label>
-    <input class="field" id="paymentRef"
-      placeholder="Bank transfer reference">
+  $("payInfo").textContent = account.configured
+    ? "Confirm the account name in your banking app before transferring."
+    : "OPay account details are still needed. Do not transfer money.";
 
-    <button class="btn" onclick="submitPaymentDetails()">
-      Submit payment reference
-    </button>
+  $("accountWarning").textContent = account.configured
+    ? "Account ownership is not verified by this app. Payment verification is not connected."
+    : "OPay is not configured. Payment verification is not connected.";
 
-    <p id="paymentStatus" class="status" aria-live="polite">
-      Payment verification is not connected. Payment is unverified
-      and Premium remains inactive.
-    </p>
-  </div>
-</section>
+  $("paymentStatus").textContent =
+    "Payment is unverified. Premium remains inactive.";
+}
+
+function submitPaymentDetails() {
+  const name = $("payerName").value.trim();
+  const reference = $("paymentRef").value.trim();
+
+  if (!name || !reference) {
+    $("paymentStatus").textContent =
+      "Enter your transfer name and payment reference.";
+    return;
+  }
+
+  $("paymentStatus").textContent =
+    "Reference entered on this device only. It has not been " +
+    "sent to a payment provider or verified. Premium remains inactive.";
+}
