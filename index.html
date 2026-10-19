@@ -1,529 +1,180 @@
- HTML
-
-<!DOCTYPE html>
+ <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0b0b12">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090910">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>MIKE LEE MUSIC APP</title>
-
 <style>
-:root {
-  --bg:#0b0b12;
-  --panel:#171722;
-  --panel2:#202033;
-  --gold:#f6c453;
-  --text:#f7f7fb;
-  --muted:#b8b8ca;
-  --line:#333348;
-  --green:#5ee0a0;
-}
-* { box-sizing:border-box; }
-body {
-  margin:0;
-  background:radial-gradient(circle at top,#25203d 0,#0b0b12 48%);
-  color:var(--text);
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-}
-header {
-  padding:24px 16px 18px;
-  text-align:center;
-  border-bottom:1px solid var(--line);
-}
-.logo {
-  font-size:12px;
-  letter-spacing:4px;
-  color:var(--gold);
-  font-weight:800;
-}
-.brand {
-  font-size:clamp(27px,7vw,42px);
-  font-weight:900;
-  margin:6px 0;
-}
-.brand span { color:var(--gold); }
-.sub { color:var(--muted); font-size:14px; }
-main {
-  max-width:900px;
-  margin:auto;
-  padding:16px;
-  display:grid;
-  gap:16px;
-}
-.card {
-  background:linear-gradient(145deg,var(--panel),#12121c);
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:16px;
-  box-shadow:0 12px 35px #0003;
-}
-h2 { font-size:18px; margin:0 0 12px; }
-label {
-  display:block;
-  color:var(--muted);
-  font-size:13px;
-  margin:10px 0 6px;
-}
-input,select,button {
-  font:inherit;
-  border-radius:11px;
-  border:1px solid var(--line);
-  padding:12px;
-  background:#10101a;
-  color:var(--text);
-  width:100%;
-}
-button {
-  background:var(--gold);
-  color:#17120a;
-  font-weight:800;
-  border:0;
-  cursor:pointer;
-}
-button.secondary {
-  background:var(--panel2);
-  color:var(--text);
-  border:1px solid var(--line);
-}
-button:disabled { opacity:.5; }
-.row { display:grid; grid-template-columns:1fr; gap:10px; }
-.btnrow {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:12px;
-}
-.hint {
-  font-size:12px;
-  line-height:1.5;
-  color:var(--muted);
-}
-.status {
-  font-size:13px;
-  color:var(--green);
-  min-height:18px;
-  margin-top:8px;
-}
-.results { display:grid; gap:10px; margin-top:14px; }
-.result {
-  display:grid;
-  grid-template-columns:100px 1fr;
-  gap:12px;
-  padding:10px;
-  background:#10101a;
-  border:1px solid var(--line);
-  border-radius:13px;
-  align-items:center;
-}
-.result img {
-  width:100px;
-  aspect-ratio:16/9;
-  object-fit:cover;
-  border-radius:8px;
-}
-.result strong {
-  display:block;
-  font-size:14px;
-  margin-bottom:8px;
-}
-.result button { padding:9px; }
-.player {
-  display:block;
-  width:100%;
-  aspect-ratio:16/9;
-  min-height:220px;
-  border:0;
-  border-radius:12px;
-  background:#050508;
-}
-.equalizer {
-  height:180px;
-  display:flex;
-  align-items:end;
-  justify-content:center;
-  gap:7px;
-  padding:14px 8px;
-  background:#10101a;
-  border:1px solid var(--line);
-  border-radius:12px;
-  margin:10px 0;
-}
-.bar {
-  width:9%;
-  max-width:25px;
-  border-radius:8px 8px 3px 3px;
-  background:linear-gradient(to top,#9c55ff,var(--gold),#fff0a6);
-  height:var(--h);
-  box-shadow:0 0 12px #f6c45333;
-  animation:move 0.8s ease-in-out infinite alternate;
-  animation-play-state:paused;
-}
-.equalizer.playing .bar { animation-play-state:running; }
-.bar:nth-child(2n) { animation-delay:-.4s; }
-.bar:nth-child(3n) { animation-delay:-.6s; }
-@keyframes move {
-  from { height:20%; }
-  to { height:var(--h); }
-}
-.foot {
-  text-align:center;
-  color:var(--muted);
-  font-size:12px;
-  padding:8px 16px 26px;
-}
-@media(min-width:650px) {
-  .row.two { grid-template-columns:1fr 1fr; }
-  .results { grid-template-columns:1fr 1fr; }
-  .result { grid-template-columns:90px 1fr; }
-  .result img { width:90px; }
-}
+:root{--bg:#090910;--panel:#141420;--panel2:#1c1c2b;--gold:#ffd447;--gold2:#ffad22;--text:#f8f8ff;--muted:#a7a7bd;--line:#303044;--green:#5ce0ad}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#25203b 0,#090910 52%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
+.wrap{max-width:980px;margin:auto;padding:16px 14px 40px}.top{display:flex;align-items:center;gap:12px;padding:10px 0 20px}.logo{width:52px;height:52px;border-radius:17px;background:linear-gradient(135deg,var(--gold),#ff8d2b);display:grid;place-items:center;color:#17131a;font-size:25px;font-weight:1000;box-shadow:0 8px 28px #ffbd3740}.brand{font-size:18px;font-weight:900;letter-spacing:.7px}.subbrand{color:var(--muted);font-size:12px;margin-top:3px}.pill{margin-left:auto;border:1px solid #5b4d27;background:#2c2718;color:var(--gold);font-size:11px;padding:7px 10px;border-radius:999px;font-weight:800}
+.hero{padding:22px 18px;border:1px solid #38334a;border-radius:24px;background:linear-gradient(125deg,#28203c,#171725 65%,#29200f);position:relative;overflow:hidden}.eyebrow{color:var(--gold);font-size:11px;font-weight:900;letter-spacing:2px}.hero h1{font-size:clamp(27px,7vw,44px);line-height:1.06;margin:10px 0}.hero p{color:#c7c5d8;max-width:580px;font-size:14px;line-height:1.6;margin:0}.countries{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.country{background:#29283a;border:1px solid #454359;color:#f3f1ff;padding:8px 12px;border-radius:999px;font-size:12px;font-weight:750;cursor:pointer}.country:focus,.country:hover{border-color:var(--gold);color:var(--gold)}
+.section{margin-top:18px;padding:17px;border:1px solid var(--line);background:linear-gradient(160deg,#171723,#111119);border-radius:21px}.secthead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}.secthead h2{font-size:17px;margin:0}.hint{color:var(--muted);font-size:11px}
+label{display:block;color:#c6c5d8;font-size:12px;margin:0 0 7px;font-weight:700}input,select{width:100%;border:1px solid #3b3b50;background:#0d0d16;color:white;border-radius:12px;padding:12px;font:inherit;font-size:14px;min-width:0;outline:none}input:focus,select:focus{border-color:var(--gold)}.searchrow{display:flex;gap:8px}.searchrow input{flex:1}.btn{border:0;border-radius:12px;padding:12px 15px;font-weight:850;cursor:pointer;font-size:13px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#17131a;white-space:nowrap}.btn.secondary{background:#29293b;color:#f7f6ff;border:1px solid #414158}.btn:active{transform:scale(.98)}.formgrid{display:grid;grid-template-columns:1fr;gap:12px}.status{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.5}.status.error{color:#ff9999}.status.ok{color:var(--green)}
+.playerbox{background:#050508;border:1px solid #37374b;border-radius:17px;overflow:hidden;aspect-ratio:16/9;min-height:220px;display:grid;place-items:center}.playerbox iframe{width:100%;height:100%;min-height:220px;border:0}.placeholder{text-align:center;padding:22px;color:var(--muted)}.playicon{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:var(--gold);color:#17131a;font-size:22px;margin:0 auto 12px}.now{margin-top:12px;display:flex;gap:10px;align-items:center}.cover{width:56px;height:56px;border-radius:14px;flex:0 0 56px;background:linear-gradient(135deg,#47375e,#f7ba35);display:grid;place-items:center;font-size:24px}.tracktitle{font-weight:850;font-size:14px;overflow-wrap:anywhere}.tracksub{font-size:12px;color:var(--muted);margin-top:4px}.eqarea{display:flex;align-items:center;gap:4px;height:85px;padding:10px 12px;margin-top:14px;background:#0b0b13;border:1px solid #29293b;border-radius:14px;overflow:hidden}.bar{flex:1;min-width:3px;max-width:10px;height:var(--h);border-radius:8px;background:linear-gradient(0deg,#ff8c28,var(--gold),#fff0a3);opacity:.92;animation:bounce var(--d) ease-in-out infinite alternate;animation-delay:var(--delay);transform-origin:bottom}@keyframes bounce{from{transform:scaleY(.25)}to{transform:scaleY(1)}}.eqcaption{font-size:10px;letter-spacing:1.6px;color:var(--gold);font-weight:900;margin-top:8px}
+.results{display:grid;gap:9px;margin-top:13px}.result{display:flex;align-items:center;gap:10px;padding:9px;border:1px solid #303044;border-radius:13px;background:#101019}.thumb{width:90px;aspect-ratio:16/9;object-fit:cover;border-radius:8px;background:#28283a}.resulttext{flex:1;min-width:0}.resulttitle{font-size:12px;font-weight:800;line-height:1.4;overflow-wrap:anywhere}.channel{font-size:11px;color:var(--muted);margin-top:4px}.result .btn{padding:9px 11px}
+.audiohelp{font-size:12px;color:var(--muted);line-height:1.6}.payprice{font-size:32px;font-weight:950;color:var(--gold);margin:4px 0}.payprice small{font-size:13px;color:var(--muted);font-weight:600}.paylist{display:grid;gap:8px;margin:14px 0}.payitem{padding:12px;background:#101019;border:1px solid #303044;border-radius:12px;font-size:13px}.payitem b{color:#fff}.warning{border:1px solid #5c4c24;background:#272212;border-radius:12px;padding:12px;color:#e7d9a4;font-size:12px;line-height:1.55}.footer{text-align:center;color:#77778d;font-size:11px;padding:24px 10px 0;line-height:1.7}.hidden{display:none!important}
+@media(min-width:700px){.formgrid.two{grid-template-columns:1fr 1fr}.results{grid-template-columns:1fr 1fr}.section{padding:20px}.hero{padding:28px}.playerbox{min-height:300px}.playerbox iframe{min-height:300px}}
 </style>
 </head>
-
 <body>
-<header>
-  <div class="logo">YOUR SOUND • YOUR WORLD</div>
-  <div class="brand">MIKE LEE <span>MUSIC</span> APP</div>
-  <div class="sub">Discover African and world music videos in one place</div>
-</header>
-
-<main>
-<section class="card">
-  <h2>🎵 Search music and videos</h2>
-
-  <label for="apiKey">YouTube Data API key</label>
-  <input id="apiKey" type="password" autocomplete="off"
-    placeholder="Paste your YouTube API key here">
-
-  <p class="hint">
-    The key is used by this page to search YouTube. Restrict it in
-    Google Cloud to YouTube Data API v3 and your website before
-    publishing. Never share your key publicly.
-  </p>
-
-  <div class="row two">
-    <div>
-      <label for="country">Country / region</label>
-      <select id="country">
-        <option value="">All countries</option>
-        <option>Nigeria</option>
-        <option>Ghana</option>
-        <option>South Africa</option>
-        <option>Kenya</option>
-        <option>Tanzania</option>
-        <option>Uganda</option>
-        <option>Cameroon</option>
-        <option>Senegal</option>
-        <option>Zimbabwe</option>
-        <option>Egypt</option>
-        <option>Morocco</option>
-        <option>Rwanda</option>
-        <option>Ivory Coast</option>
-        <option>Ethiopia</option>
-        <option>DR Congo</option>
-        <option>Angola</option>
-        <option>India</option>
-        <option>United Kingdom</option>
-        <option>United States</option>
-        <option>Jamaica</option>
-        <option>Brazil</option>
-      </select>
-    </div>
-    <div>
-      <label for="kind">Music category</label>
-      <select id="kind">
-        <option value="music">Music videos</option>
-        <option value="artist">Artist</option>
-        <option value="live">Live performances</option>
-        <option value="gospel">Gospel</option>
-        <option value="highlife">Highlife</option>
-        <option value="afrobeats">Afrobeats</option>
-        <option value="fuji">Fuji</option>
-        <option value="oldschool">Old-school</option>
-      </select>
-    </div>
-  </div>
-
-  <label for="query">Song, artist, album or genre</label>
-  <input id="query" placeholder="e.g. Wizkid, Angelique Kidjo, Highlife">
-
-  <div class="btnrow">
-    <button id="searchBtn" type="button">Search music</button>
-    <button class="secondary" id="clearBtn" type="button">Clear</button>
-  </div>
-
-  <div id="status" class="status" role="status" aria-live="polite"></div>
-  <div id="results" class="results"></div>
+<div class="wrap">
+<header class="top"><div class="logo">ML</div><div><div class="brand">MIKE LEE MUSIC APP</div><div class="subbrand">African sounds. Every generation.</div></div><div class="pill">PREMIUM MUSIC</div></header>
+<section class="hero">
+<div class="eyebrow">YOUR SOUND • YOUR CULTURE</div>
+<h1>Feel the rhythm.<br>Live the music.</h1>
+<p>Discover African music videos, search artists and play available YouTube videos right here in the app.</p>
+<div class="countries">
+<button class="country" data-query="Nigerian Afrobeats official music video">🇳🇬 Nigeria</button>
+<button class="country" data-query="Ghanaian Highlife official music video">🇬🇭 Ghana</button>
+<button class="country" data-query="South African Amapiano official music video">🇿🇦 South Africa</button>
+<button class="country" data-query="Tanzanian Bongo Flava official music video">🇹🇿 Tanzania</button>
+<button class="country" data-query="African Gospel official music video">✦ Gospel</button>
+</div>
 </section>
 
-<section class="card">
-  <h2>▶ MIKE LEE in-app video player</h2>
-
-  <iframe
-    id="videoPlayer"
-    class="player"
-    title="MIKE LEE MUSIC APP YouTube video player"
-    src="about:blank"
-    referrerpolicy="strict-origin-when-cross-origin"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-
-  <p class="hint">
-    Select a search result and tap Play here. Videos play inside this
-    page when YouTube and the video owner allow embedding. Some videos
-    may be blocked by the owner, account settings, or regional limits.
-  </p>
+<section class="section">
+<div class="secthead"><h2>▶ Music video player</h2><span class="hint">Plays inside this page</span></div>
+<div class="playerbox" id="playerbox"><div class="placeholder"><div class="playicon">▶</div><b>Your music video appears here</b><div class="status">Search for a song below or paste a YouTube video link.</div></div></div>
+<div class="now"><div class="cover">♫</div><div><div class="tracktitle" id="nowtitle">MIKE LEE MUSIC APP</div><div class="tracksub" id="nowsub">Choose a video to start listening</div></div></div>
+<div class="eqarea" id="eqarea" aria-label="Decorative animated equalizer"></div><div class="eqcaption">MIKE LEE • SOUND VISUALIZER</div>
+<div class="status" id="playerstatus" role="status">Ready. If a video is blocked by its owner, choose another search result.</div>
 </section>
 
-<section class="card">
-  <h2>🎚️ Equalizer visual</h2>
-  <div id="equalizer" class="equalizer" aria-label="Animated equalizer visual">
-    <div class="bar" style="--h:48%"></div>
-    <div class="bar" style="--h:72%"></div>
-    <div class="bar" style="--h:60%"></div>
-    <div class="bar" style="--h:92%"></div>
-    <div class="bar" style="--h:68%"></div>
-    <div class="bar" style="--h:100%"></div>
-    <div class="bar" style="--h:78%"></div>
-    <div class="bar" style="--h:54%"></div>
-    <div class="bar" style="--h:88%"></div>
-    <div class="bar" style="--h:42%"></div>
-  </div>
-  <p class="hint">
-    This is a visual equalizer, not a real audio processor. A web page
-    cannot safely boost volume beyond your phone's limits or apply
-    equalization to YouTube's separate iframe audio.
-  </p>
+<section class="section">
+<div class="secthead"><h2>⌕ Search African music videos</h2><span class="hint">Requires your API key</span></div>
+<label for="query">Song, artist, genre or country</label>
+<div class="searchrow"><input id="query" placeholder="e.g. Wizkid, Burna Boy, Highlife" autocomplete="off"><button class="btn" id="searchBtn">Search</button></div>
+<div style="margin-top:13px"><label for="apiKey">YouTube Data API key</label><input id="apiKey" type="password" autocomplete="off" placeholder="Paste your API key here"><div class="status">Your key is used in this browser to search YouTube. Do not share it publicly; restrict it to your website in Google Cloud when possible.</div></div>
+<div class="searchrow" style="margin-top:12px"><input id="videoUrl" placeholder="Or paste a YouTube video URL / video ID"><button class="btn secondary" id="loadBtn">Play video</button></div>
+<div id="searchstatus" class="status" role="status">Tip: you can test the player by pasting a video URL or ID above.</div>
+<div id="results" class="results"></div>
 </section>
 
-<section class="card">
-  <h2>🎧 Play an audio file from your phone</h2>
-  <label for="audioFile">Choose an audio file</label>
-  <input id="audioFile" type="file" accept="audio/*">
-
-  <audio id="audioPlayer" controls
-    style="width:100%;margin-top:12px"></audio>
-
-  <p class="hint">
-    This plays a file selected on your device. It does not upload the
-    file or provide a licensed online music catalogue.
-  </p>
+<section class="section">
+<div class="secthead"><h2>♫ Audio player</h2><span class="hint">For direct audio files</span></div>
+<label for="audioUrl">Direct audio file URL (.mp3, .m4a, .ogg)</label>
+<div class="searchrow"><input id="audioUrl" type="url" placeholder="Paste a direct audio file URL"><button class="btn" id="audioLoad">Load audio</button></div>
+<div style="margin-top:13px"><audio id="audio" controls preload="none" style="width:100%"></audio></div>
+<p class="audiohelp">This audio player needs a direct audio-file address. A YouTube watch link is not a direct audio file. Only play music you have permission to stream.</p>
 </section>
 
-<section class="card">
-  <h2>💳 Premium subscription</h2>
-  <p>Planned subscription price: <strong>₦5,000/month</strong></p>
-  <p class="hint">
-    Subscription payments are not connected in this HTML preview.
-    Before charging customers, configure a secure payment provider,
-    server-side payment verification, receipts, and account access
-    controls. Do not put bank passwords or secret payment credentials
-    in this public HTML file.
-  </p>
+<section class="section">
+<div class="secthead"><h2>♛ Premium membership</h2><span class="pill" style="margin:0">MONTHLY</span></div>
+<div class="payprice">₦5,000 <small>/ month</small></div>
+<p class="audiohelp">Premium subscription display for the all-country music plan.</p>
+<div class="paylist">
+<div class="payitem">✓ <b>African music discovery</b> — browse by country, artist and genre.</div>
+<div class="payitem">✓ <b>Video and audio player</b> — playback depends on the source and availability.</div>
+<div class="payitem">✓ <b>Member access</b> — payment must be verified before access is granted.</div>
+</div>
+<div class="warning"><b>Payment setup is not connected yet.</b> This HTML page does not collect or verify bank transfers, activate subscriptions, or issue verified receipts. Before accepting customer payments, connect a secure payment provider or verified server-side payment workflow. Do not publish personal account details or ask customers to send bank passwords, PINs or OTPs.</div>
 </section>
-</main>
-
-<div class="foot">MIKE LEE MUSIC APP • Preview build</div>
-
+<footer class="footer">MIKE LEE MUSIC APP • Built for mobile screens<br>YouTube videos are hosted by YouTube. Some videos may not allow embedding.</footer>
+</div>
 <script>
-"use strict";
-
 const $ = id => document.getElementById(id);
-const statusBox = $("status");
-const results = $("results");
+const playerBox = $('playerbox');
+const playerStatus = $('playerstatus');
+const searchStatus = $('searchstatus');
+const resultsBox = $('results');
+const nowTitle = $('nowtitle');
+const nowSub = $('nowsub');
 
-function setStatus(message) {
-  statusBox.textContent = message;
-}
-
-function clean(value) {
-  return String(value || "").replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]);
-}
-
-function makeQuery() {
-  const query = $("query").value.trim();
-  const country = $("country").value;
-  const kind = $("kind").value;
-
-  const labels = {
-    music: "official music video",
-    artist: "songs and music videos",
-    live: "live performance",
-    gospel: "gospel music",
-    highlife: "highlife music",
-    afrobeats: "Afrobeats music",
-    fuji: "Fuji music",
-    oldschool: "old school music"
-  };
-
-  return [query, country, labels[kind] || "music video"]
-    .filter(Boolean)
-    .join(" ");
-}
-
-function playVideo(videoId) {
-  const player = $("videoPlayer");
-
-  // The origin must match the published website's actual origin.
-  const origin = window.location.origin;
-
-  const embedUrl = new URL(
-    "https://www.youtube.com/embed/" + encodeURIComponent(videoId)
-  );
-
-  embedUrl.searchParams.set("autoplay", "1");
-  embedUrl.searchParams.set("rel", "0");
-  embedUrl.searchParams.set("playsinline", "1");
-  embedUrl.searchParams.set("origin", origin);
-
-  player.referrerPolicy = "strict-origin-when-cross-origin";
-  player.src = embedUrl.toString();
-
-  player.scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  });
-
-  setStatus("Loading selected video…");
-}
-
-async function searchMusic() {
-  const key = $("apiKey").value.trim();
-  const query = makeQuery();
-
-  if (!key) {
-    setStatus("Paste your YouTube Data API key first.");
-    $("apiKey").focus();
-    return;
-  }
-
-  if (!$("query").value.trim()) {
-    setStatus("Enter a song, artist, album or genre.");
-    $("query").focus();
-    return;
-  }
-
-  const button = $("searchBtn");
-  button.disabled = true;
-  results.replaceChildren();
-  setStatus("Searching YouTube…");
-
-  try {
-    const url = new URL(
-      "https://www.googleapis.com/youtube/v3/search"
-    );
-
-    url.searchParams.set("part", "snippet");
-    url.searchParams.set("type", "video");
-    url.searchParams.set("videoEmbeddable", "true");
-    url.searchParams.set("maxResults", "12");
-    url.searchParams.set("q", query);
-    url.searchParams.set("key", key);
-
-    const response = await fetch(url.toString());
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(
-        data?.error?.message ||
-        "Search failed. Check your API key and YouTube Data API v3."
-      );
+function setStatus(el, text, kind=''){el.textContent=text;el.className='status'+(kind?' '+kind:'');}
+function getVideoId(raw){
+  const s=(raw||'').trim();
+  if(/^[\w-]{11}$/.test(s)) return s;
+  try{
+    const u=new URL(s);
+    if(u.hostname==='youtu.be'||u.hostname.endsWith('.youtu.be')) return u.pathname.split('/').filter(Boolean)[0]||'';
+    if(u.hostname.includes('youtube.com')||u.hostname.includes('youtube-nocookie.com')){
+      if(u.searchParams.get('v')) return u.searchParams.get('v');
+      const p=u.pathname.split('/').filter(Boolean);
+      const i=p.findIndex(x=>['embed','shorts','live'].includes(x));
+      if(i>=0&&p[i+1]) return p[i+1];
     }
-
-    const items = (data.items || []).filter(
-      item => item.id && item.id.videoId && item.snippet
-    );
-
-    if (!items.length) {
-      setStatus("No embeddable results found. Try another search.");
-      return;
-    }
-
-    setStatus(
-      "Found " + items.length +
-      " results. Tap Play here to watch inside the app."
-    );
-
-    for (const item of items) {
-      const videoId = item.id.videoId;
-      const title = item.snippet.title || "Untitled video";
-      const thumbnail =
-        item.snippet.thumbnails?.medium?.url || "";
-
-      const card = document.createElement("div");
-      card.className = "result";
-
-      const img = document.createElement("img");
-      img.alt = "";
-      img.loading = "lazy";
-      img.src = thumbnail;
-
-      const details = document.createElement("div");
-      const heading = document.createElement("strong");
-      heading.textContent = title;
-
-      const playButton = document.createElement("button");
-      playButton.type = "button";
-      playButton.textContent = "▶ Play here";
-      playButton.addEventListener("click", () => playVideo(videoId));
-
-      details.append(heading, playButton);
-      card.append(img, details);
-      results.appendChild(card);
-    }
-  } catch (error) {
-    setStatus(
-      "Search failed: " + error.message +
-      " Check your connection, API key, quota and API restrictions."
-    );
-  } finally {
-    button.disabled = false;
-  }
+  }catch(e){}
+  return '';
 }
-
-$("searchBtn").addEventListener("click", searchMusic);
-
-$("query").addEventListener("keydown", event => {
-  if (event.key === "Enter") searchMusic();
+function playVideo(id,title='YouTube music video',channel='Selected video'){
+  if(!/^[\w-]{11}$/.test(id)){setStatus(playerStatus,'That does not look like a valid YouTube video ID or URL.','error');return;}
+  const frame=document.createElement('iframe');
+  frame.title='YouTube music video player';
+  frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+  frame.allowFullscreen=true;
+  frame.referrerPolicy='strict-origin-when-cross-origin';
+  frame.src='https://www.youtube.com/embed/'+encodeURIComponent(id)+'?playsinline=1&rel=0';
+  playerBox.replaceChildren(frame);
+  nowTitle.textContent=title;
+  nowSub.textContent=channel;
+  setStatus(playerStatus,'Loading video. If YouTube shows Error 153, open the app from its HTTPS GitHub Pages website (not as a local file or a direct iframe URL).','');
+}
+$('loadBtn').addEventListener('click',()=>{
+  const id=getVideoId($('videoUrl').value);
+  if(!id){setStatus(playerStatus,'Paste a full YouTube link or an 11-character video ID first.','error');return;}
+  playVideo(id);
 });
-
-$("clearBtn").addEventListener("click", () => {
-  results.replaceChildren();
-  $("query").value = "";
-  $("videoPlayer").src = "about:blank";
-  setStatus("Search results cleared.");
+$('videoUrl').addEventListener('keydown',e=>{if(e.key==='Enter')$('loadBtn').click();});
+document.querySelectorAll('.country').forEach(b=>b.addEventListener('click',()=>{
+  $('query').value=b.dataset.query;
+  $('searchBtn').click();
+}));
+async function searchVideos(){
+  const q=$('query').value.trim();
+  const key=$('apiKey').value.trim();
+  if(!q){setStatus(searchStatus,'Type an artist, song, genre or country first.','error');return;}
+  if(!key){setStatus(searchStatus,'Paste your YouTube Data API key above before searching. Video URL playback does not need a key.','error');return;}
+  resultsBox.replaceChildren();
+  setStatus(searchStatus,'Searching YouTube…');
+  $('searchBtn').disabled=true;
+  try{
+    const url=new URL('https://www.googleapis.com/youtube/v3/search');
+    url.search=new URLSearchParams({part:'snippet',type:'video',videoEmbeddable:'true',maxResults:'10',q:q,regionCode:'NG',relevanceLanguage:'en',key:key});
+    const res=await fetch(url);
+    const data=await res.json();
+    if(!res.ok) throw new Error(data.error?.message||'YouTube search failed. Check the API key and API restrictions.');
+    const items=(data.items||[]).filter(x=>x.id&&x.id.videoId);
+    if(!items.length){setStatus(searchStatus,'No embeddable videos were returned. Try another spelling or search term.','');return;}
+    setStatus(searchStatus,`Found ${items.length} video results. Tap Play to load one in the player.`,'ok');
+    items.forEach(item=>{
+      const id=item.id.videoId;
+      const title=item.snippet?.title||'YouTube video';
+      const channel=item.snippet?.channelTitle||'YouTube';
+      const row=document.createElement('div');row.className='result';
+      const img=document.createElement('img');img.className='thumb';img.alt='Video thumbnail';img.loading='lazy';img.src=item.snippet?.thumbnails?.medium?.url||'';
+      const txt=document.createElement('div');txt.className='resulttext';
+      const t=document.createElement('div');t.className='resulttitle';t.textContent=title;
+      const c=document.createElement('div');c.className='channel';c.textContent=channel;
+      txt.append(t,c);
+      const btn=document.createElement('button');btn.className='btn';btn.textContent='Play';btn.addEventListener('click',()=>{playVideo(id,title,channel);window.scrollTo({top:playerBox.getBoundingClientRect().top+window.scrollY-20,behavior:'smooth'});});
+      row.append(img,txt,btn);resultsBox.append(row);
+    });
+  }catch(err){setStatus(searchStatus,err.message||'Could not search. Check your internet connection and API key.','error');}
+  finally{$('searchBtn').disabled=false;}
+}
+$('searchBtn').addEventListener('click',searchVideos);
+$('query').addEventListener('keydown',e=>{if(e.key==='Enter')searchVideos();});
+$('audioLoad').addEventListener('click',()=>{
+  const url=$('audioUrl').value.trim();
+  try{
+    const u=new URL(url);
+    if(!['http:','https:'].includes(u.protocol)) throw new Error();
+    $('audio').src=u.href;$('audio').load();
+    $('audio').play().catch(()=>{});
+  }catch(e){alert('Please paste a valid direct audio URL beginning with https:// or http://');}
 });
-
-$("audioFile").addEventListener("change", event => {
-  const file = event.target.files && event.target.files[0];
-
-  if (file) {
-    $("audioPlayer").src = URL.createObjectURL(file);
-    $("audioPlayer").load();
-    $("equalizer").classList.add("playing");
-  }
-});
-
-$("audioPlayer").addEventListener("play", () => {
-  $("equalizer").classList.add("playing");
-});
-
-$("audioPlayer").addEventListener("pause", () => {
-  $("equalizer").classList.remove("playing");
-});
-
-$("audioPlayer").addEventListener("ended", () => {
-  $("equalizer").classList.remove("playing");
-});
+const eq=$('eqarea');
+for(let i=0;i<42;i++){
+  const b=document.createElement('span');b.className='bar';
+  b.style.setProperty('--h',(14+Math.round(Math.abs(Math.sin(i*2.31))*65))+'px');
+  b.style.setProperty('--d',(0.35+(i%7)*0.13)+'s');
+  b.style.setProperty('--delay',(-Math.random()*1.8)+'s');
+  eq.append(b);
+}
 </script>
 </body>
-</html>
+ </html>
+ 
