@@ -1,0 +1,61 @@
+ 
+<video
+  id="musicVideo"
+  controls
+  playsinline
+  preload="metadata"
+  style="width:100%;max-height:70vh;background:#000;border-radius:12px">
+</video>
+
+<input
+  id="videoUrl"
+  type="url"
+  placeholder="Paste a permitted video stream URL"
+  style="width:100%;padding:12px;margin-top:10px;box-sizing:border-box">
+
+<button onclick="loadMusicVideo()">
+  Load Video
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<script>
+let hlsPlayer;
+
+function loadMusicVideo() {
+  const video = document.getElementById("musicVideo");
+  const url = document.getElementById("videoUrl").value.trim();
+
+  if (!url) {
+    alert("Enter a video stream URL first.");
+    return;
+  }
+
+  if (hlsPlayer) {
+    hlsPlayer.destroy();
+    hlsPlayer = null;
+  }
+
+  video.pause();
+  video.removeAttribute("src");
+  video.load();
+
+  if (/\.m3u8($|\?)/i.test(url)) {
+    if (video.canPlayType("application/vnd.apple.mpegurl")) {
+      video.src = url;
+    } else if (window.Hls && Hls.isSupported()) {
+      hlsPlayer = new Hls();
+      hlsPlayer.loadSource(url);
+      hlsPlayer.attachMedia(video);
+    } else {
+      alert("This browser cannot play this HLS stream.");
+      return;
+    }
+  } else {
+    video.src = url;
+  }
+
+  video.play().catch(() => {
+    alert("Tap Play on the video to start playback.");
+  });
+}
+</script>
