@@ -21,14 +21,14 @@ label{display:block;color:#d9d9ed;font-size:13px;margin:12px 0 6px}
 input,select,button{font:inherit;border-radius:10px;padding:12px;width:100%;border:1px solid #44445f;background:#0c0c19;color:white}
 button{border:0;background:linear-gradient(100deg,#e72d91,#783bfa);font-weight:bold;cursor:pointer;margin-top:10px}
 button.secondary{background:#30304a;border:1px solid #555575}
-button:active{opacity:.8}
+button:disabled{opacity:.6}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .player{width:100%;aspect-ratio:16/9;background:#05050a;border:1px solid #41415c;border-radius:12px;overflow:hidden}
 .player iframe{width:100%;height:100%;border:0}
 .note{font-size:12px;color:var(--muted);line-height:1.5}
-#status{color:var(--cyan);font-size:13px;overflow-wrap:anywhere}
+.status{color:var(--cyan);font-size:13px;overflow-wrap:anywhere;margin-top:10px}
 .results{display:grid;gap:8px;margin-top:12px}
-.result{padding:12px;background:#22223a;border-radius:10px}
+.result{padding:12px;background:#22223a;border-radius:10px;overflow-wrap:anywhere}
 .result button{margin-top:8px}
 .bars{height:105px;display:flex;align-items:center;justify-content:center;gap:10px;margin:5px auto 15px}
 .bar{width:12px;height:70px;border-radius:8px;background:linear-gradient(to top,var(--pink),var(--cyan));transform-origin:center;animation:pulse .7s ease-in-out infinite alternate}
@@ -40,13 +40,14 @@ button:active{opacity:.8}
 @keyframes pulse{from{transform:scaleY(.35)}to{transform:scaleY(1)}}
 .paused .bar{animation-play-state:paused}
 audio{width:100%;margin-top:12px}
+.cover{display:block;width:100%;max-height:240px;object-fit:cover;border-radius:12px}
 footer{text-align:center;padding:20px;color:var(--muted);font-size:12px}
 @media(max-width:420px){.grid{grid-template-columns:1fr}header h1{font-size:22px}}
 </style>
 </head>
 <body>
 <header>
-<h1>🎵 MIKE LEE MUSIC</h1>
+<h1 id="heading">🎵 MIKE LEE MUSIC</h1>
 <p>Your music. Your countries. Your sound.</p>
 </header>
 
@@ -67,7 +68,17 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:12px}
 <option>Cameroon</option><option>Zimbabwe</option><option>Canada</option>
 <option>Australia</option><option>Japan</option><option>Mexico</option>
 <option>Germany</option><option>Italy</option><option>Spain</option>
+<option>China</option><option>Gambia</option><option>Senegal</option>
+<option>Ivory Coast</option><option>Benin</option><option>Togo</option>
+<option>Rwanda</option><option>Ethiopia</option><option>Egypt</option>
+<option>Morocco</option><option>Algeria</option><option>Portugal</option>
+<option>Netherlands</option><option>Ireland</option><option>New Zealand</option>
+<option>South Korea</option><option>Indonesia</option><option>Philippines</option>
+<option>Argentina</option><option>Colombia</option><option>Chile</option>
+<option>Turkey</option><option>Saudi Arabia</option><option>United Arab Emirates</option>
+<option>Trinidad and Tobago</option><option>Barbados</option><option>Haiti</option>
 </select>
+
 <label for="genre">Choose genre</label>
 <select id="genre">
 <option>All music</option><option>Afrobeats</option><option>Highlife</option>
@@ -75,80 +86,89 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:12px}
 <option>Hip Hop</option><option>R&B</option><option>Country Music</option>
 <option>Traditional</option><option>Old School</option><option>Reggae</option>
 <option>Jazz</option><option>Pop</option><option>Classical</option>
+<option>Rock</option><option>Dance</option><option>Worship</option>
 </select>
+<p class="note">Choose a country and genre, then use YouTube search below to find matching music.</p>
 </section>
 
 <section class="panel">
-<h2>▶ YouTube Music & Video</h2>
+<h2>▶ YouTube Music &amp; Video</h2>
 <label for="youtubeUrl">Paste a YouTube video URL</label>
 <input id="youtubeUrl" type="url" placeholder="https://www.youtube.com/watch?v=VIDEO_ID">
 <button id="playYoutube">Play YouTube video</button>
-<div style="height:12px"></div>
-<div class="player" id="youtubePlayer">
+<div class="player" id="youtubePlayer" style="margin-top:12px">
 <div style="padding:24px;text-align:center;color:#aaa">Your selected video will appear here.</div>
 </div>
-<p class="note">Use a normal YouTube watch link or youtu.be link. Videos must permit embedding. If a video shows Error 153, check that the published website is opened over HTTPS in Chrome and that its referrer is not being stripped.</p>
+<div id="videoStatus" class="status" aria-live="polite"></div>
+<p class="note">Some videos cannot be embedded because of the owner's settings, restrictions, or YouTube player errors. Use a public video that allows embedding. This player cannot bypass those restrictions.</p>
 </section>
 
 <section class="panel">
 <h2>🔎 Search YouTube</h2>
 <label for="apiKey">YouTube Data API key</label>
-<input id="apiKey" type="password" placeholder="Paste your API key here">
-<p class="note">Your key is stored only in this page's current memory. Do not share it publicly or commit it to GitHub. Restrict it in Google Cloud to the YouTube Data API and your website where supported.</p>
+<input id="apiKey" type="password" autocomplete="off" placeholder="Paste your API key here">
+<p class="note">The key stays in this page's memory and is not saved by this app. Do not share it or commit it to GitHub. Restrict your key to the YouTube Data API and your website where supported.</p>
 <label for="searchTerm">Artist or song title</label>
 <input id="searchTerm" placeholder="e.g. Nigerian gospel music">
 <button id="searchButton">Search YouTube</button>
-<div id="searchStatus" class="note" aria-live="polite"></div>
+<div id="searchStatus" class="status" aria-live="polite"></div>
 <div id="results" class="results"></div>
 </section>
 
 <section class="panel">
 <h2>🎧 Direct Audio Player</h2>
-<label for="audioUrl">Direct audio file URL (MP3, AAC, or supported stream)</label>
+<label for="audioUrl">Direct audio file or stream URL</label>
 <input id="audioUrl" type="url" placeholder="https://example.com/song.mp3">
 <button id="loadAudio">Load audio URL</button>
 <audio id="audioPlayer" controls preload="none"></audio>
-<p class="note">Use a direct audio-file or compatible streaming URL, not an ordinary YouTube page URL. The host must permit playback from this website.</p>
+<div id="audioStatus" class="status" aria-live="polite"></div>
+<p class="note">Enter a direct HTTP or HTTPS audio-file or compatible stream URL. An ordinary YouTube page link is not a direct audio URL. Playback depends on the host and supported audio format.</p>
 </section>
 
 <section class="panel">
 <h2>⚙️ Settings</h2>
 <label for="appName">App display name</label>
 <input id="appName" value="MIKE LEE MUSIC APP">
+<button class="secondary" id="setName">Apply app name</button>
+
 <label for="coverUrl">Cover image URL (optional)</label>
 <input id="coverUrl" type="url" placeholder="https://example.com/cover.jpg">
 <button class="secondary" id="setCover">Apply cover image</button>
 <div id="coverPreview" style="margin-top:12px"></div>
+
 <h2 style="margin-top:24px">💎 Premium Membership</h2>
 <p>₦5,000 per month</p>
-<p class="note">First Bank and OPay payment options can be configured here when verified payment processing is available. This page does not collect payments or verify subscriptions.</p>
+<p class="note">First Bank and OPay payment methods require verified payment processing to accept and confirm payments. This app does not currently process payments or activate subscriptions.</p>
 </section>
 </main>
+
 <footer>MIKE LEE MUSIC APP · Stream responsibly and respect artists' rights.</footer>
 
 <script>
 "use strict";
-
 const $ = id => document.getElementById(id);
-const player = $("youtubePlayer");
 
 function getVideoId(input) {
   try {
     const url = new URL(input.trim());
+    const host = url.hostname.toLowerCase();
     let id = "";
-    if (url.hostname === "youtu.be" || url.hostname.endsWith(".youtu.be")) {
+
+    if (host === "youtu.be") {
       id = url.pathname.split("/").filter(Boolean)[0] || "";
     } else if (
-      url.hostname === "youtube.com" ||
-      url.hostname.endsWith(".youtube.com") ||
-      url.hostname === "youtube-nocookie.com" ||
-      url.hostname.endsWith(".youtube-nocookie.com")
+      host === "youtube.com" ||
+      host.endsWith(".youtube.com") ||
+      host === "youtube-nocookie.com" ||
+      host.endsWith(".youtube-nocookie.com")
     ) {
-      if (url.pathname === "/watch") id = url.searchParams.get("v") || "";
-      else if (/^\/(embed|shorts|live)\/[^/]+/.test(url.pathname)) {
+      if (url.pathname === "/watch") {
+        id = url.searchParams.get("v") || "";
+      } else if (/^\/(embed|shorts|live)\/[^/]+/.test(url.pathname)) {
         id = url.pathname.split("/")[2] || "";
       }
     }
+
     return /^[A-Za-z0-9_-]{11}$/.test(id) ? id : null;
   } catch {
     return null;
@@ -156,26 +176,34 @@ function getVideoId(input) {
 }
 
 function playVideo(id) {
+  const player = $("youtubePlayer");
+  const status = $("videoStatus");
+
   if (!/^[A-Za-z0-9_-]{11}$/.test(id)) {
-    $("status").textContent = "Invalid YouTube video ID.";
+    status.textContent = "Invalid YouTube video ID. Check the link.";
     return;
   }
+
   const frame = document.createElement("iframe");
   frame.title = "YouTube music video player";
   frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
   frame.allowFullscreen = true;
   frame.referrerPolicy = "strict-origin-when-cross-origin";
-  frame.src = "https://www.youtube-nocookie.com/embed/" +
+  frame.src = "https://www.youtube.com/embed/" +
     encodeURIComponent(id) + "?playsinline=1&rel=0";
+
   player.replaceChildren(frame);
+  status.textContent = "Video loaded. Press Play inside the video. If an error appears, try another public video that permits embedding.";
 }
 
 $("playYoutube").addEventListener("click", () => {
   const id = getVideoId($("youtubeUrl").value);
+
   if (!id) {
-    player.textContent = "Please paste a valid YouTube video URL.";
+    $("videoStatus").textContent = "Please paste a valid YouTube watch, youtu.be, Shorts, or embed URL.";
     return;
   }
+
   playVideo(id);
 });
 
@@ -186,90 +214,155 @@ $("searchButton").addEventListener("click", async () => {
   const genre = $("genre").value;
   const status = $("searchStatus");
   const results = $("results");
+  const button = $("searchButton");
+
   results.replaceChildren();
 
   if (!key || !term) {
     status.textContent = "Enter your API key and a song or artist name.";
     return;
   }
+
+  const query = [
+    term,
+    country === "Worldwide" ? "" : country,
+    genre === "All music" ? "" : genre
+  ].filter(Boolean).join(" ");
+
   status.textContent = "Searching YouTube…";
+  button.disabled = true;
+
   try {
-    const q = [term, country === "Worldwide" ? "" : country, genre === "All music" ? "" : genre]
-      .filter(Boolean).join(" ");
     const params = new URLSearchParams({
-      part: "snippet", type: "video", maxResults: "8",
-      q, key
+      part: "snippet",
+      type: "video",
+      maxResults: "8",
+      q: query,
+      key: key
     });
+
     const response = await fetch(
       "https://www.googleapis.com/youtube/v3/search?" + params.toString()
     );
+
     const data = await response.json();
+
     if (!response.ok) {
       throw new Error(data.error?.message || "YouTube search failed.");
     }
-    if (!data.items?.length) {
-      status.textContent = "No results found. Try another search.";
+
+    if (!data.items || !data.items.length) {
+      status.textContent = "No results found. Try another song or artist.";
       return;
     }
-    status.textContent = "Choose a result to play.";
+
+    status.textContent = "Search complete. Choose a video to play.";
+
     data.items.forEach(item => {
-      const id = item.id?.videoId;
+      const id = item.id && item.id.videoId;
       if (!id) return;
+
       const card = document.createElement("div");
       card.className = "result";
+
       const title = document.createElement("strong");
       title.textContent = item.snippet?.title || "Untitled video";
+
       const channel = document.createElement("p");
       channel.className = "note";
       channel.textContent = item.snippet?.channelTitle || "";
-      const button = document.createElement("button");
-      button.textContent = "Play this video";
-      button.addEventListener("click", () => playVideo(id));
-      card.append(title, channel, button);
+
+      const playButton = document.createElement("button");
+      playButton.textContent = "Play this video";
+      playButton.addEventListener("click", () => {
+        $("youtubeUrl").value = "https://www.youtube.com/watch?v=" + id;
+        playVideo(id);
+        $("youtubePlayer").scrollIntoView({behavior:"smooth", block:"center"});
+      });
+
+      card.append(title, channel, playButton);
       results.appendChild(card);
     });
   } catch (error) {
-    status.textContent = "Error: " + error.message +
-      " Check your API key, API restrictions, internet connection, and quota.";
+    status.textContent = "Search error: " + error.message +
+      " Check your API key, enabled YouTube Data API v3, key restrictions, internet connection, and quota.";
+  } finally {
+    button.disabled = false;
   }
 });
 
 $("loadAudio").addEventListener("click", () => {
   const input = $("audioUrl").value.trim();
+  const status = $("audioStatus");
+  const audio = $("audioPlayer");
+
+  let url;
   try {
-    const url = new URL(input);
+    url = new URL(input);
     if (!["https:", "http:"].includes(url.protocol)) throw new Error();
-    const audio = $("audioPlayer");
-    audio.src = url.href;
-    audio.load();
-    audio.play().catch(() => {
-      $("searchStatus").textContent =
-        "Audio loaded. Tap Play on the audio controls if playback did not start.";
-    });
   } catch {
-    alert("Please enter a valid direct HTTP or HTTPS audio URL.");
+    status.textContent = "Enter a valid direct HTTP or HTTPS audio URL.";
+    return;
   }
+
+  audio.pause();
+  audio.src = url.href;
+  audio.load();
+  status.textContent = "Audio URL loaded. Press Play if playback does not start automatically.";
+
+  audio.play().then(() => {
+    status.textContent = "Audio is playing.";
+  }).catch(() => {
+    status.textContent = "Audio is loaded. Press Play. If it fails, check that the URL points to playable audio and that the host permits access.";
+  });
+});
+
+$("audioPlayer").addEventListener("error", () => {
+  $("audioStatus").textContent = "Audio could not be played. Check the URL, file format, and host availability.";
+});
+
+$("audioPlayer").addEventListener("play", () => {
+  $("equalizer").classList.remove("paused");
+});
+
+$("audioPlayer").addEventListener("pause", () => {
+  $("equalizer").classList.add("paused");
+});
+
+$("setName").addEventListener("click", () => {
+  const name = $("appName").value.trim();
+  if (!name) {
+    alert("Enter an app name first.");
+    return;
+  }
+  $("heading").textContent = "🎵 " + name;
+  document.title = name;
 });
 
 $("setCover").addEventListener("click", () => {
   const value = $("coverUrl").value.trim();
   const preview = $("coverPreview");
   preview.replaceChildren();
+
   if (!value) {
     alert("Enter a cover image URL first.");
     return;
   }
+
   try {
     const url = new URL(value);
     if (!["https:", "http:"].includes(url.protocol)) throw new Error();
+
     const img = document.createElement("img");
     img.src = url.href;
     img.alt = "Music app cover";
-    img.style.cssText = "max-width:100%;max-height:240px;border-radius:12px";
-    img.onerror = () => { preview.textContent = "Could not load this image URL."; };
+    img.className = "cover";
+    img.onerror = () => {
+      preview.textContent = "Could not load this image. Try another image URL.";
+    };
     preview.appendChild(img);
   } catch {
-    alert("Please enter a valid HTTP or HTTPS image URL.");
+    alert("Enter a valid HTTP or HTTPS image URL.");
   }
 });
 </script>
