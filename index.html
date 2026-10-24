@@ -4,90 +4,244 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090a12">
 <title>MIKE LEE MUSIC APP</title>
 <style>
-body{margin:0;background:#101020;color:white;font-family:Arial,sans-serif;text-align:center}
-header{background:#191932;padding:22px;color:#ffd166}
-main{padding:18px;max-width:650px;margin:auto}
-input,button{box-sizing:border-box;padding:13px;margin:6px 0;border-radius:9px;border:0;width:100%;font-size:16px}
-input{background:#252542;color:white;border:1px solid #555}
-button{background:#ffd166;color:#17172b;font-weight:bold;cursor:pointer}
-.panel{background:#191932;padding:16px;border-radius:16px;margin:16px 0}
-iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:12px}
-audio{width:100%;margin-top:12px}
-.bars{height:110px;display:flex;align-items:center;justify-content:center;gap:9px}
-.bars span{width:13px;height:70px;background:#ffd166;border-radius:9px;animation:equalize .7s infinite alternate}
-.bars span:nth-child(2){animation-delay:.2s}
-.bars span:nth-child(3){animation-delay:.4s}
-.bars span:nth-child(4){animation-delay:.1s}
-.bars span:nth-child(5){animation-delay:.3s}
-.bars span:nth-child(6){animation-delay:.5s}
-@keyframes equalize{from{transform:scaleY(.25)}to{transform:scaleY(1)}}
-small{color:#bbb}
+:root{--gold:#f5c75e;--bg:#090a12;--panel:#171827;--muted:#a8a9bb}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#fff;font-family:Arial,sans-serif}
+header{padding:23px 18px;background:linear-gradient(135deg,#28203b,#10111c);border-bottom:1px solid #40334b}
+.brand{color:var(--gold);font-size:12px;letter-spacing:4px}
+h1{margin:8px 0;font-size:27px}
+header p,.muted{color:var(--muted);font-size:13px}
+main{max-width:850px;margin:auto;padding:15px}
+.panel{background:var(--panel);border:1px solid #2c2d40;border-radius:17px;padding:17px;margin:15px 0}
+h2{font-size:18px;margin:0 0 15px}
+label{display:block;font-size:12px;color:var(--muted);margin:12px 0 6px}
+input,select{width:100%;padding:13px;background:#0d0e19;color:white;border:1px solid #383950;border-radius:9px;font-size:15px}
+button,.button{background:var(--gold);color:#17120a;border:0;border-radius:9px;padding:12px 15px;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block}
+button.secondary{background:#2b2c40;color:#fff;border:1px solid #41435a}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.actions button{flex:1}
+.equalizer{height:118px;display:flex;justify-content:center;align-items:center;gap:10px}
+.equalizer span{width:13px;height:65px;border-radius:8px;background:linear-gradient(#fff0a7,var(--gold),#b87927);animation:move .75s ease-in-out infinite alternate}
+.equalizer span:nth-child(2){animation-delay:.15s;height:95px}
+.equalizer span:nth-child(3){animation-delay:.3s;height:75px}
+.equalizer span:nth-child(4){animation-delay:.1s;height:105px}
+.equalizer span:nth-child(5){animation-delay:.25s;height:60px}
+.equalizer span:nth-child(6){animation-delay:.4s;height:88px}
+@keyframes move{to{transform:scaleY(.35)}}
+#video iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;margin-top:14px}
+audio{width:100%;margin-top:14px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.tile{background:#222337;border:1px solid #383950;padding:14px;border-radius:12px;cursor:pointer}
+.tile strong{display:block;margin-bottom:5px}
+.tile small{color:var(--muted)}
+.note{font-size:12px;color:var(--muted);line-height:1.6}
+footer{text-align:center;padding:25px;color:var(--muted);font-size:12px}
+.hidden{display:none}
+@media(min-width:600px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 </style>
 </head>
 <body>
 <header>
-<h1>🎵 MIKE LEE MUSIC APP</h1>
-<p>Music from around the world</p>
+ <div class="brand">YOUR GLOBAL SOUND EXPERIENCE</div>
+ <h1>🎵 MIKE LEE MUSIC</h1>
+ <p>Discover sounds from around the world.</p>
 </header>
 <main>
-<div class="bars">
-<span></span><span></span><span></span>
-<span></span><span></span><span></span>
-</div>
-<section class="panel">
-<h2>▶ YouTube Music Video</h2>
-<input id="yt" placeholder="Paste YouTube video URL or ID">
-<button onclick="playVideo()">PLAY VIDEO</button>
-<div id="video"><small>Your selected video will appear here.</small></div>
-</section>
-<section class="panel">
-<h2>🎧 Direct Audio Player</h2>
-<input id="audioUrl" placeholder="Paste direct MP3 or audio URL">
-<button onclick="playAudio()">LOAD AUDIO</button>
-<audio id="player" controls preload="none"></audio>
-<p><small>Use a direct audio file URL, not a normal webpage link.</small></p>
-</section>
+ <section class="panel" style="text-align:center">
+  <div class="equalizer" aria-label="Six animated equalizer bars">
+   <span></span><span></span><span></span>
+   <span></span><span></span><span></span>
+  </div>
+  <h2>Feel Every Beat</h2>
+  <p class="muted">Music • Videos • Global genres</p>
+ </section>
+
+ <section class="panel">
+  <h2>🌍 Explore Countries</h2>
+  <label for="country">Choose a country</label>
+  <select id="country">
+   <option value="Nigeria">🇳🇬 Nigeria</option>
+   <option>Ghana</option><option>South Africa</option>
+   <option>United States</option><option>United Kingdom</option>
+   <option>Jamaica</option><option>India</option><option>Brazil</option>
+   <option>France</option><option>Japan</option><option>Kenya</option>
+   <option>Uganda</option><option>Canada</option><option>Australia</option>
+   <option>Mexico</option><option>Egypt</option><option>Tanzania</option>
+   <option>Ethiopia</option><option>Germany</option><option>Italy</option>
+  </select>
+  <label for="genre">Music genre</label>
+  <select id="genre">
+   <option>Afrobeats</option><option>Gospel / Christian</option>
+   <option>Fuji</option><option>Highlife</option><option>Hip Hop</option>
+   <option>R&B</option><option>Reggae</option><option>Country</option>
+   <option>Traditional</option><option>Old School</option>
+   <option>Pop</option><option>Jazz</option><option>Classical</option>
+   <option>Gospel</option><option>Electronic</option>
+  </select>
+  <label for="search">Search songs, artists or videos</label>
+  <input id="search" placeholder="Enter artist or song name">
+  <div class="actions">
+   <button onclick="searchYouTube()">SEARCH YOUTUBE</button>
+  </div>
+  <p class="note">Search requires a YouTube Data API key. Add your own key in Settings below. Never publish a private key in a public repository.</p>
+  <div id="results"></div>
+ </section>
+
+ <section class="panel">
+  <h2>▶ YouTube Video Player</h2>
+  <label for="yt">YouTube video URL or 11-character video ID</label>
+  <input id="yt" placeholder="https://www.youtube.com/watch?v=...">
+  <div class="actions">
+   <button onclick="playVideo()">PLAY VIDEO</button>
+   <button class="secondary" onclick="openYouTube()">OPEN ON YOUTUBE</button>
+  </div>
+  <div id="video"><p class="muted">Your selected video will appear here.</p></div>
+  <p id="videoStatus" class="note">Choose a video that permits embedding.</p>
+ </section>
+
+ <section class="panel">
+  <h2>🎧 Audio Player</h2>
+  <label for="audioUrl">Direct audio file URL</label>
+  <input id="audioUrl" type="url" placeholder="https://example.com/song.mp3">
+  <div class="actions">
+   <button onclick="loadAudio()">LOAD AUDIO</button>
+  </div>
+  <audio id="audio" controls preload="metadata"></audio>
+  <p class="note">Use a direct MP3, OGG or other browser-supported audio file URL. A normal webpage or YouTube link is not a direct audio file.</p>
+ </section>
+
+ <section class="panel">
+  <h2>📥 Downloads</h2>
+  <p class="note">Download music only when the artist or provider permits it. Some streaming services do not allow direct downloads.</p>
+  <a class="button" href="https://support.google.com/youtube/answer/11977233" target="_blank" rel="noopener">YouTube download information</a>
+ </section>
+
+ <section class="panel">
+  <h2>⚙️ Settings</h2>
+  <label for="apiKey">YouTube Data API key (optional, for searching)</label>
+  <input id="apiKey" type="password" autocomplete="off" placeholder="Paste your API key">
+  <div class="actions">
+   <button onclick="saveSettings()">SAVE SETTINGS</button>
+   <button class="secondary" onclick="clearSettings()">CLEAR KEY</button>
+  </div>
+  <p class="note">The key is kept in this browser session only. For a public app, a secure backend is safer than exposing an API key in client-side code.</p>
+  <h2 style="margin-top:24px">👑 Premium</h2>
+  <p>Subscription display: ₦5,000 / month</p>
+  <p class="note">Payment options: First Bank and OPay. Payments are not verified or collected by this demo. Connect a secure payment provider before accepting subscriptions.</p>
+  <h2 style="margin-top:24px">🖼️ App image</h2>
+  <label for="cover">Choose a picture for this screen</label>
+  <input id="cover" type="file" accept="image/*">
+  <div id="coverPreview"></div>
+ </section>
 </main>
+<footer>MIKE LEE MUSIC APP · Listen responsibly and respect artists' rights.</footer>
+
 <script>
-function playVideo(){
- const input=document.getElementById('yt').value.trim();
- let id=input;
+let lastVideoId = "";
+function getVideoId(value){
+ value=value.trim();
+ if(/^[A-Za-z0-9_-]{11}$/.test(value)) return value;
  try{
-   const u=new URL(input);
-   if(u.hostname==='youtu.be') id=u.pathname.split('/').filter(Boolean)[0]||'';
-   else if(u.hostname.endsWith('youtube.com')){
-     if(u.pathname==='/watch') id=u.searchParams.get('v')||'';
-     else if(u.pathname.startsWith('/embed/')) id=u.pathname.split('/')[2]||'';
-     else if(u.pathname.startsWith('/shorts/')) id=u.pathname.split('/')[2]||'';
-     else id='';
-   } else id='';
+  const u=new URL(value);
+  if(u.hostname==="youtu.be") return u.pathname.split("/").filter(Boolean)[0]||"";
+  if(u.hostname==="www.youtube.com"||u.hostname==="youtube.com"||u.hostname==="m.youtube.com"||u.hostname==="music.youtube.com"){
+   if(u.pathname==="/watch") return u.searchParams.get("v")||"";
+   const m=u.pathname.match(/^\/(?:embed|shorts|live)\/([A-Za-z0-9_-]{11})/);
+   return m?m[1]:"";
+  }
  }catch(e){}
- if(!/^[A-Za-z0-9_-]{11}$/.test(id)){
-   alert('Please enter a valid YouTube video URL or 11-character video ID.');
-   return;
+ return "";
+}
+function playVideo(id){
+ const input=id||document.getElementById("yt").value;
+ const videoId=getVideoId(input);
+ const status=document.getElementById("videoStatus");
+ if(!videoId){
+  status.textContent="That link was not recognised. Paste a full YouTube URL or an 11-character video ID.";
+  return;
  }
- const frame=document.createElement('iframe');
- frame.title='YouTube music video';
- frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+ lastVideoId=videoId;
+ document.getElementById("yt").value=videoId;
+ const frame=document.createElement("iframe");
+ frame.title="YouTube video player";
+ frame.allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
  frame.allowFullscreen=true;
- frame.referrerPolicy='strict-origin-when-cross-origin';
- frame.src='https://www.youtube.com/embed/'+encodeURIComponent(id)+'?playsinline=1&rel=0';
- const box=document.getElementById('video');
+ frame.referrerPolicy="strict-origin-when-cross-origin";
+ frame.src="https://www.youtube.com/embed/"+encodeURIComponent(videoId)+"?playsinline=1&rel=0";
+ const box=document.getElementById("video");
  box.replaceChildren(frame);
+ status.textContent="Loading YouTube player. If playback fails, try another video that allows embedding.";
 }
-function playAudio(){
- const url=document.getElementById('audioUrl').value.trim();
- if(!/^https?:\/\//i.test(url)){
-   alert('Please enter a direct HTTP or HTTPS audio URL.');
-   return;
- }
- const player=document.getElementById('player');
- player.src=url;
- player.load();
- player.play().catch(()=>alert('Tap Play on the audio player. If it fails, the audio URL may not be a playable audio file.'));
+function openYouTube(){
+ const id=getVideoId(document.getElementById("yt").value)||lastVideoId;
+ if(!id){alert("Enter a YouTube URL or video ID first.");return;}
+ window.open("https://www.youtube.com/watch?v="+encodeURIComponent(id),"_blank","noopener");
 }
+function loadAudio(){
+ const input=document.getElementById("audioUrl").value.trim();
+ if(!/^https?:\/\//i.test(input)){alert("Enter a direct HTTP or HTTPS audio file URL.");return;}
+ const audio=document.getElementById("audio");
+ audio.src=input;
+ audio.load();
+ audio.play().catch(()=>{});
+}
+async function searchYouTube(){
+ const key=document.getElementById("apiKey").value.trim();
+ const query=document.getElementById("search").value.trim();
+ const country=document.getElementById("country").value;
+ const genre=document.getElementById("genre").value;
+ const out=document.getElementById("results");
+ if(!query){alert("Enter an artist or song name first.");return;}
+ if(!key){out.textContent="Add a YouTube Data API key in Settings to search within this app.";return;}
+ out.textContent="Searching YouTube…";
+ try{
+  const params=new URLSearchParams({part:"snippet",type:"video",maxResults:"8",q:query+" "+genre+" "+country,key:key});
+  const res=await fetch("https://www.googleapis.com/youtube/v3/search?"+params.toString());
+  const data=await res.json();
+  if(!res.ok) throw new Error(data.error?.message||"YouTube search failed.");
+  out.replaceChildren();
+  if(!data.items?.length){out.textContent="No videos found. Try a different search.";return;}
+  data.items.forEach(item=>{
+   const id=item.id.videoId;
+   const card=document.createElement("div");
+   card.className="tile";
+   card.style.marginTop="10px";
+   const title=document.createElement("strong");
+   title.textContent=item.snippet.title;
+   const channel=document.createElement("small");
+   channel.textContent=item.snippet.channelTitle;
+   const btn=document.createElement("button");
+   btn.style.marginTop="10px";
+   btn.textContent="PLAY";
+   btn.onclick=()=>playVideo(id);
+   card.append(title,document.createElement("br"),channel,btn);
+   out.append(card);
+  });
+ }catch(e){out.textContent="Search error: "+e.message+" Check your API key, quota and API restrictions.";}
+}
+function saveSettings(){
+ sessionStorage.setItem("mikeLeeYouTubeKey",document.getElementById("apiKey").value.trim());
+ alert("Settings saved for this browser session.");
+}
+function clearSettings(){
+ document.getElementById("apiKey").value="";
+ sessionStorage.removeItem("mikeLeeYouTubeKey");
+}
+document.getElementById("apiKey").value=sessionStorage.getItem("mikeLeeYouTubeKey")||"";
+document.getElementById("cover").addEventListener("change",function(){
+ const file=this.files&&this.files[0];
+ if(!file)return;
+ const img=document.createElement("img");
+ img.alt="Selected app picture";
+ img.style.cssText="width:100%;max-height:240px;object-fit:cover;border-radius:12px;margin-top:12px";
+ img.src=URL.createObjectURL(file);
+ const preview=document.getElementById("coverPreview");
+ preview.replaceChildren(img);
+});
 </script>
 </body>
-</html>
+ </html>
+   
